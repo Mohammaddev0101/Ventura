@@ -2,7 +2,6 @@ const express = require('express');
 const Product = require('../models/Product');
 const Category = require('../models/Category');
 const auth = require('../middleware/auth');
-const adminAuth = require('../middleware/adminAuth');
 
 const router = express.Router();
 
@@ -95,72 +94,6 @@ router.get('/:slug', async (req, res) => {
   } catch (error) {
     console.error('Get product error:', error);
     res.status(500).json({ message: 'خطا در دریافت محصول' });
-  }
-});
-
-// Add product review
-router.post('/:id/reviews', auth, async (req, res) => {
-  try {
-    const { rating, comment } = req.body;
-    
-    const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: 'محصول یافت نشد' });
-    }
-
-    // Check if user already reviewed
-    const existingReview = product.reviews.find(
-      review => review.user.toString() === req.userId
-    );
-
-    if (existingReview) {
-      return res.status(400).json({ message: 'شما قبلاً این محصول را نظر داده‌اید' });
-    }
-
-    // Add review
-    product.reviews.push({
-      user: req.userId,
-      rating,
-      comment
-    });
-
-    // Update rating
-    product.updateRating();
-    await product.save();
-
-    await product.populate('reviews.user', 'name avatar');
-
-    res.status(201).json({
-      message: 'نظر شما با موفقیت ثبت شد',
-      reviews: product.reviews
-    });
-  } catch (error) {
-    console.error('Add review error:', error);
-    res.status(500).json({ message: 'خطا در ثبت نظر' });
-  }
-});
-
-// Get related products
-router.get('/:id/related', async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: 'محصول یافت نشد' });
-    }
-
-    const relatedProducts = await Product.find({
-      _id: { $ne: product._id },
-      category: product.category,
-      isActive: true
-    })
-    .populate('category', 'name slug')
-    .limit(4)
-    .select('-reviews');
-
-    res.json(relatedProducts);
-  } catch (error) {
-    console.error('Get related products error:', error);
-    res.status(500).json({ message: 'خطا در دریافت محصولات مرتبط' });
   }
 });
 

@@ -87,55 +87,10 @@ router.post('/login', async (req, res) => {
 router.get('/me', auth, async (req, res) => {
   try {
     const user = await User.findById(req.userId).populate('wishlist');
-    res.json(user);
+    res.json({ user });
   } catch (error) {
     console.error('Get user error:', error);
     res.status(500).json({ message: 'خطا در دریافت اطلاعات کاربر' });
-  }
-});
-
-// Update profile
-router.put('/profile', auth, async (req, res) => {
-  try {
-    const { name, phone, address } = req.body;
-    
-    const user = await User.findByIdAndUpdate(
-      req.userId,
-      { name, phone, address },
-      { new: true, runValidators: true }
-    );
-
-    res.json({
-      message: 'پروفایل با موفقیت به‌روزرسانی شد',
-      user
-    });
-  } catch (error) {
-    console.error('Update profile error:', error);
-    res.status(500).json({ message: 'خطا در به‌روزرسانی پروفایل' });
-  }
-});
-
-// Change password
-router.put('/change-password', auth, async (req, res) => {
-  try {
-    const { currentPassword, newPassword } = req.body;
-    
-    const user = await User.findById(req.userId);
-    
-    // Check current password
-    const isMatch = await user.comparePassword(currentPassword);
-    if (!isMatch) {
-      return res.status(400).json({ message: 'رمز عبور فعلی اشتباه است' });
-    }
-
-    // Update password
-    user.password = newPassword;
-    await user.save();
-
-    res.json({ message: 'رمز عبور با موفقیت تغییر کرد' });
-  } catch (error) {
-    console.error('Change password error:', error);
-    res.status(500).json({ message: 'خطا در تغییر رمز عبور' });
   }
 });
 
