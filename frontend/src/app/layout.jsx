@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { CartProvider } from '@/context/CartContext'
 import { AuthProvider } from '@/context/AuthContext'
+import { Toaster } from '@/components/ui/toaster'
 import '@/app/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -34,15 +35,18 @@ export default function RootLayout({ children }) {
         <link rel="canonical" href="https://ventura-store.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#6DA975" />
-{/* 
-            <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> */}
-
       </head>
       <body className={inter.className}>
-        <ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
           <AuthProvider>
             <CartProvider>
               {children}
+              <Toaster />
             </CartProvider>
           </AuthProvider>
         </ThemeProvider>

@@ -1,28 +1,72 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Vazir:wght@300;400;500;600;700&display=swap'); */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 142 69% 58%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 142 69% 58%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 142 69% 58%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 142 69% 58%;
+  }
 }
 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* RTL Support */
 html {
   direction: rtl;
 }
 
 body {
-  font-family: 'Vazir', sans-serif;
-  background-color: #FFFFFF;
-  color: #081035;
+  font-family: 'Inter', sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.dark body {
-  background-color: #081035;
-  color: #FFFFFF;
 }
 
 /* Custom scrollbar */
@@ -31,72 +75,23 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: hsl(var(--muted));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #6DA975;
+  background: hsl(var(--primary));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #5a8a61;
+  background: hsl(var(--primary) / 0.8);
 }
 
-@layer base {
-
-  /* Custom button styles */
-  .btn-primary {
-    @apply bg-primary text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-primary/90 hover:shadow-lg;
-  }
-
-  .btn-secondary {
-    @apply bg-auxiliary-orange text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-auxiliary-orange/90 hover:shadow-lg;
-  }
-
-  /* Card hover effects */
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-2;
-  }
-
-
-  /* Custom input styles */
-  .input-field {
-    @apply w-full px-4 py-3 border border-neutral-light rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300;
-  }
-
-  .dark .input-field {
-    @apply bg-neutral-gray/20 border-neutral-gray text-white;
-  }
-
-
-  /* Category card styles */
-  .category-card {
-    @apply bg-white dark:bg-neutral-gray/20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer;
-  }
-
-  /* Badge styles */
-  .badge-new {
-    @apply bg-primary text-white text-xs px-2 py-1 rounded-full font-medium;
-  }
-
-  .badge-sale {
-    @apply bg-red-500 text-white text-xs px-2 py-1 rounded-full font-medium;
-  }
-
-  .badge-discount {
-    @apply bg-auxiliary-orange text-white text-xs px-2 py-1 rounded-full font-medium;
-  }
-}
-
-/* Animations */
+/* Custom animations */
 @keyframes float {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0px);
   }
-
   50% {
     transform: translateY(-10px);
   }
@@ -106,50 +101,7 @@ body {
   animation: float 3s ease-in-out infinite;
 }
 
-
-
-/* Loading spinner */
-.spinner {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #6DA975;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* RTL specific styles */
-.rtl {
-  direction: rtl;
-  text-align: right;
-}
-
-
-/* Product grid responsive */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
-}
-
-@media (max-width: 768px) {
-  .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
-  }
-}
-
-/* Hero section styles */
+/* Gradient backgrounds */
 .hero-gradient {
   background: linear-gradient(135deg, #E4F6E7 0%, #FFFFFF 100%);
 }
@@ -158,52 +110,30 @@ body {
   background: linear-gradient(135deg, #081035 0%, #1a1a2e 100%);
 }
 
-
-.category-card:hover {
-  transform: translateY(-5px);
-}
-
-/* Brand logo styles */
-.brand-logo {
-  filter: grayscale(100%);
-  transition: filter 0.3s ease;
-}
-
-.brand-logo:hover {
-  filter: grayscale(0%);
-}
-
-/* Newsletter section */
 .newsletter-bg {
   background: linear-gradient(135deg, #6DA975 0%, #5a8a61 100%);
 }
 
-/* Footer styles */
 .footer-gradient {
   background: linear-gradient(135deg, #081035 0%, #1a1a2e 100%);
 }
 
-/* Mobile menu animation */
-.mobile-menu {
-  transform: translateX(100%);
-  transition: transform 0.3s ease-in-out;
+/* Card hover effects */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-2;
 }
 
-.mobile-menu.open {
-  transform: translateX(0);
+/* Loading spinner */
+.spinner {
+  border: 4px solid hsl(var(--muted));
+  border-top: 4px solid hsl(var(--primary));
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
 }
 
-/* Search overlay */
-.search-overlay {
-  backdrop-filter: blur(10px);
-  background: rgba(0, 0, 0, 0.5);
-}
-
-/* Product image hover effect */
-.product-image {
-  transition: transform 0.3s ease;
-}
-
-.product-image:hover {
-  transform: scale(1.05);
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
