@@ -28,6 +28,9 @@
     "react-hook-form": "^7.48.2",
     "react-hot-toast": "^2.4.1",
     "swiper": "^11.0.5",
+    "framer-motion": "^11.0.0",
+    "react-intersection-observer": "^9.5.3",
+    "aos": "^2.3.4",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7"
   },
