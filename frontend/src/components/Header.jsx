@@ -6,11 +6,12 @@ import { useTheme } from '@/components/ThemeProvider'
 import { useCart } from '@/context/CartContext'
 import { useAuth } from '@/context/AuthContext'
 import { Button } from '@/components/ui/Button'
-import { 
-  MagnifyingGlassIcon, 
-  ShoppingCartIcon, 
-  UserIcon, 
-  SunIcon, 
+import Image from 'next/image'
+import {
+  MagnifyingGlassIcon,
+  ShoppingCartIcon,
+  UserIcon,
+  SunIcon,
   MoonIcon,
   Bars3Icon,
   XMarkIcon,
@@ -46,7 +47,7 @@ export default function Header() {
   return (
     <>
       {/* Top Bar */}
-      <div className="bg-green-600 dark:bg-green-800 text-white py-2">
+      {/* <div className="bg-green-600 dark:bg-green-800 text-white py-2">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center space-x-4 space-x-reverse">
@@ -63,41 +64,34 @@ export default function Header() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Main Header */}
-      <motion.header 
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          scrolled 
-            ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg' 
-            : 'bg-white dark:bg-gray-900'
-        }`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
+      <header
+        className='fixed w-full top-5 z-50 transition-all duration-300'
       >
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between py-4">
+        <div className={`container w-[80%] mx-auto px-4 ${isMenuOpen ? 'rounded-2xl' : 'rounded-full'} bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg`}>
+          <div className="flex items-center justify-between">
             {/* Logo */}
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link href="/" className="flex items-center space-x-3 space-x-reverse">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold text-xl">V</span>
+              <Link href="/" className="flex items-center space-x-2">
+                <div className="text-2xl font-bold">
+                  VENTURA
                 </div>
-                <div>
-                  <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-orange-500 bg-clip-text text-transparent">
-                    ونتورا
-                  </span>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">تجهیزات کمپینگ</div>
-                </div>
+                 <Image
+                    src="/img/logo.png"
+                    width={30}
+                    height={30}
+                    alt="VENTURA"
+                  />
               </Link>
             </motion.div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8 space-x-reverse">
+            <nav className="hidden lg:flex items-center space-x-8">
               {navigation.map((item, index) => (
                 <motion.div
                   key={item.name}
@@ -110,7 +104,7 @@ export default function Header() {
                     className="relative text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 font-medium transition-colors group"
                   >
                     {item.name}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-600 transition-all duration-300 group-hover:w-full"></span>
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-600 transition-all duration-100 group-hover:w-full rounded-2xl"></span>
                   </Link>
                 </motion.div>
               ))}
@@ -160,15 +154,15 @@ export default function Header() {
               </motion.div>
 
               {/* Cart */}
-              <motion.div 
-                whileHover={{ scale: 1.1 }} 
+              <motion.div
+                whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="relative"
               >
                 <Link href="/cart" className="p-2 text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors">
                   <ShoppingCartIcon className="w-6 h-6" />
                   {getTotalItems() > 0 && (
-                    <motion.span 
+                    <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium"
@@ -181,16 +175,16 @@ export default function Header() {
 
               {/* User Menu */}
               <div className="relative group">
-                <motion.button 
-                  whileHover={{ scale: 1.1 }} 
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   className="p-2 text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors"
                 >
                   <UserIcon className="w-6 h-6" />
                 </motion.button>
-                
+
                 <AnimatePresence>
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -285,7 +279,7 @@ export default function Header() {
             )}
           </AnimatePresence>
         </div>
-      </motion.header>
+      </header>
 
       {/* Search Overlay */}
       <AnimatePresence>

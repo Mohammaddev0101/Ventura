@@ -29,7 +29,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="fa" dir="rtl" suppressHydrationWarning>
+    <html lang="fa" dir="rtl">
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="canonical" href="https://ventura-store.com" />

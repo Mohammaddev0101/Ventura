@@ -44,13 +44,13 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-green-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden">
       {/* Background Elements */}
-      <motion.div 
+      {/* <motion.div 
         style={{ y: y2 }}
         className="absolute inset-0 opacity-30"
       >
         <div className="absolute top-20 right-20 w-72 h-72 bg-green-200 dark:bg-green-800 rounded-full blur-3xl opacity-20"></div>
         <div className="absolute bottom-20 left-20 w-96 h-96 bg-orange-200 dark:bg-orange-800 rounded-full blur-3xl opacity-20"></div>
-      </motion.div>
+      </motion.div> */}
 
       <div className="container mx-auto px-4 py-20 relative z-10">
         <motion.div 

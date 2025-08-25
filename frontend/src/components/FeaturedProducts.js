@@ -113,7 +113,7 @@ export default function FeaturedProducts() {
           <div className="inline-flex items-center bg-primary-light dark:bg-primary/20 px-4 py-2 rounded-full mb-4">
             <span className="text-primary font-medium">محصولات ویژه</span>
           </div>
-          <h2 className="text-3xl lg:text-4xl font-bold text-text-dark dark:text-white mb-4">
+          <h2 className="text-3xl lg:text-4xl font-bold text-dark dark:text-white mb-4">
             محصولات تخفیف‌دار
           </h2>
           <p className="text-neutral-gray max-w-2xl mx-auto">
