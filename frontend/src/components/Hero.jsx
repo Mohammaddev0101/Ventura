@@ -1,309 +1,175 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
-import { Button } from '@/components/ui/Button'
-import { ArrowLeftIcon, PlayIcon, StarIcon } from '@heroicons/react/24/outline'
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const { scrollY } = useScroll()
-  const y1 = useTransform(scrollY, [0, 300], [0, -50])
-  const y2 = useTransform(scrollY, [0, 300], [0, -100])
-  const opacity = useTransform(scrollY, [0, 300], [1, 0])
 
-  const [ref, inView] = useInView({
-    threshold: 0.1,
-    triggerOnce: true
-  })
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
+  const slides = [
+    {
+      id: 1,
+      title: 'سفری رویایی، تجهیزاتی بی‌نظیر',
+      subtitle: 'بهترین تجهیزات کمپینگ و طبیعت‌گردی',
+      description: 'با تجهیزات باکیفیت ونتورا، هر سفر را به یک تجربه فراموش‌نشدنی تبدیل کنید',
+      image: 'https://images.pexels.com/photos/2398220/pexels-photo-2398220.jpeg',
+      cta: 'مشاهده محصولات',
+      price: '۱,۹۹۹',
+      originalPrice: '۲,۴۹۹'
     }
-  }
+  ]
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
-  }
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [slides.length])
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-green-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden">
-      {/* Background Elements */}
-      {/* <motion.div 
-        style={{ y: y2 }}
-        className="absolute inset-0 opacity-30"
-      >
-        <div className="absolute top-20 right-20 w-72 h-72 bg-green-200 dark:bg-green-800 rounded-full blur-3xl opacity-20"></div>
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-orange-200 dark:bg-orange-800 rounded-full blur-3xl opacity-20"></div>
-      </motion.div> */}
-
-      <div className="container mx-auto px-4 py-20 relative z-10">
-        <motion.div 
-          ref={ref}
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]"
-        >
+    <section className="relative bg-gradient-to-br from-green-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden">
+      <div className="container mx-auto px-4 py-16 lg:py-24">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
-          <motion.div 
-            style={{ opacity }}
-            className="space-y-8"
-          >
-            <motion.div variants={itemVariants} className="space-y-6">
-              <motion.div 
-                className="inline-flex items-center bg-green-100 dark:bg-green-900/30 px-4 py-2 rounded-full"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <StarIcon className="w-5 h-5 text-green-600 dark:text-green-400 ml-2" />
-                <span className="text-green-700 dark:text-green-300 font-medium text-sm">
-                  بهترین تجهیزات کمپینگ
-                </span>
-              </motion.div>
-
-              <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
-                <span className="text-gray-900 dark:text-white">سفری </span>
-                <span className="text-gradient bg-gradient-to-r from-green-600 to-orange-500 bg-clip-text text-transparent">
-                  رویایی
-                </span>
+          <div className="space-y-8 animate-fade-in">
+            <div className="space-y-4">
+              <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
+                سفری رویایی،
                 <br />
-                <span className="text-gray-900 dark:text-white">تجهیزاتی </span>
-                <span className="text-gradient bg-gradient-to-r from-orange-500 to-green-600 bg-clip-text text-transparent">
-                  بی‌نظیر
-                </span>
+                <span className="text-green-600">تجهیزاتی بی‌نظیر</span>
               </h1>
-
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-lg leading-relaxed">
-                با تجهیزات باکیفیت ونتورا، هر سفر را به یک تجربه فراموش‌نشدنی تبدیل کنید
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-md">
+                بهترین تجهیزات کمپینگ و طبیعت‌گردی را از ونتورا بخرید و هر سفر را به یک تجربه فراموش‌نشدنی تبدیل کنید
               </p>
-            </motion.div>
+            </div>
+
+            {/* Price Display */}
+            <div className="flex items-center space-x-4 space-x-reverse">
+              <span className="text-3xl font-bold text-green-600">
+                ۱,۹۹۹ هزار تومان
+              </span>
+              <span className="text-lg text-gray-500 line-through">
+                ۲,۴۹۹ هزار تومان
+              </span>
+              <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                ۲۰٪ تخفیف
+              </span>
+            </div>
+
+            {/* CTA Button */}
+            <div className="flex items-center space-x-4 space-x-reverse">
+              <Link
+                href="/products"
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl inline-flex items-center space-x-2 space-x-reverse group"
+              >
+                <span>مشاهده محصولات</span>
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </Link>
+              <Link
+                href="/categories"
+                className="px-6 py-3 border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-lg font-medium transition-all duration-300"
+              >
+                دسته‌بندی‌ها
+              </Link>
+            </div>
 
             {/* Stats */}
-            <motion.div 
-              variants={itemVariants}
-              className="grid grid-cols-3 gap-8 py-8"
-            >
-              {[
-                { number: '۱۰۰+', label: 'محصول متنوع' },
-                { number: '۵۰۰+', label: 'مشتری راضی' },
-                { number: '۲۴/۷', label: 'پشتیبانی' }
-              ].map((stat, index) => (
-                <motion.div 
-                  key={index}
-                  className="text-center"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <div className="text-3xl font-bold text-green-600 dark:text-green-400">
-                    {stat.number}
-                  </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
+            <div className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600">۱۰۰+</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">محصول متنوع</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600">۵۰۰+</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">مشتری راضی</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600">۲۴/۷</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">پشتیبانی</div>
+              </div>
+            </div>
+          </div>
 
-            {/* CTA Buttons */}
-            <motion.div 
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4"
-            >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button asChild size="lg" className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-                  <Link href="/products" className="flex items-center gap-2">
-                    <span>مشاهده محصولات</span>
-                    <ArrowLeftIcon className="w-5 h-5" />
-                  </Link>
-                </Button>
-              </motion.div>
-
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button variant="outline" size="lg" className="border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 px-8 py-4 rounded-xl">
-                  <PlayIcon className="w-5 h-5 ml-2" />
-                  تماشای ویدیو
-                </Button>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-
-          {/* Hero Visual */}
-          <motion.div 
-            style={{ y: y1 }}
-            className="relative"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.5 }}
-              className="relative z-10"
-            >
+          {/* Hero Image */}
+          <div className="relative">
+            <div className="relative z-10 float-animation">
               {/* Main Product Display */}
-              <div className="relative bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-2xl glow">
+              <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-2xl">
                 <div className="relative">
-                  {/* 3D Camping Scene */}
-                  <div className="w-full h-96 bg-gradient-to-br from-green-100 to-orange-100 dark:from-green-900/30 dark:to-orange-900/30 rounded-2xl flex items-center justify-center relative overflow-hidden">
-                    {/* Animated Background Elements */}
-                    <motion.div 
-                      animate={{ 
-                        rotate: 360,
-                        scale: [1, 1.1, 1]
-                      }}
-                      transition={{ 
-                        rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                        scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
-                      }}
-                      className="absolute inset-0 opacity-10"
-                    >
-                      <div className="w-full h-full bg-gradient-to-r from-green-400 to-orange-400 rounded-2xl"></div>
-                    </motion.div>
-
+                  {/* Camping Scene */}
+                  <div className="w-full h-80 bg-gradient-to-br from-green-100 to-green-50 dark:from-green-900/20 dark:to-green-800/20 rounded-2xl flex items-center justify-center relative overflow-hidden">
                     {/* Trees */}
-                    <motion.div 
-                      initial={{ x: -50, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.8, duration: 0.8 }}
-                      className="absolute left-4 bottom-0"
-                    >
-                      <svg width="80" height="100" viewBox="0 0 80 100" className="text-green-600 dark:text-green-400">
-                        <motion.path 
-                          d="M40 15 L25 50 L55 50 Z" 
-                          fill="currentColor"
-                          initial={{ pathLength: 0 }}
-                          animate={{ pathLength: 1 }}
-                          transition={{ delay: 1, duration: 1 }}
-                        />
-                        <motion.path 
-                          d="M40 35 L20 65 L60 65 Z" 
-                          fill="currentColor"
-                          initial={{ pathLength: 0 }}
-                          animate={{ pathLength: 1 }}
-                          transition={{ delay: 1.2, duration: 1 }}
-                        />
-                        <rect x="38" y="65" width="4" height="35" fill="#8B4513" />
+                    <div className="absolute left-4 bottom-0">
+                      <svg width="60" height="80" viewBox="0 0 60 80" className="text-green-600">
+                        <path d="M30 10 L20 40 L40 40 Z" fill="currentColor" />
+                        <path d="M30 25 L15 50 L45 50 Z" fill="currentColor" />
+                        <rect x="28" y="50" width="4" height="30" fill="#8B4513" />
                       </svg>
-                    </motion.div>
-
-                    {/* Tent - Main Focus */}
-                    <motion.div 
-                      className="relative z-10"
-                      initial={{ scale: 0, rotate: -10 }}
-                      animate={{ scale: 1, rotate: 0 }}
-                      transition={{ delay: 1, duration: 0.8, type: "spring" }}
-                      whileHover={{ scale: 1.05, rotate: 2 }}
-                    >
-                      <svg width="160" height="120" viewBox="0 0 160 120" className="drop-shadow-2xl">
-                        <defs>
-                          <linearGradient id="tentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#10B981" />
-                            <stop offset="100%" stopColor="#059669" />
-                          </linearGradient>
-                        </defs>
-                        <path d="M30 90 L80 30 L130 90 Z" fill="url(#tentGradient)" stroke="#047857" strokeWidth="3" />
-                        <path d="M80 30 L80 90" stroke="#047857" strokeWidth="3" />
-                        <path d="M40 90 L120 90" stroke="#047857" strokeWidth="3" />
-                        <circle cx="65" cy="65" r="4" fill="#F59E0B" />
-                        <motion.circle 
-                          cx="95" cy="65" r="2" fill="#EF4444"
-                          animate={{ opacity: [0.5, 1, 0.5] }}
-                          transition={{ duration: 2, repeat: Infinity }}
-                        />
+                    </div>
+                    <div className="absolute right-8 bottom-0">
+                      <svg width="50" height="70" viewBox="0 0 50 70" className="text-green-600 opacity-80">
+                        <path d="M25 5 L18 30 L32 30 Z" fill="currentColor" />
+                        <path d="M25 20 L12 40 L38 40 Z" fill="currentColor" />
+                        <rect x="23" y="40" width="4" height="30" fill="#8B4513" />
                       </svg>
-                    </motion.div>
+                    </div>
 
-                    {/* Floating Elements */}
-                    <motion.div 
-                      className="absolute right-16 top-8"
-                      animate={{ y: [-5, 5, -5] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <div className="w-8 h-8 bg-orange-400 rounded-full opacity-60 blur-sm"></div>
-                    </motion.div>
+                    {/* Tent */}
+                    <div className="relative z-10">
+                      <svg width="120" height="80" viewBox="0 0 120 80" className="drop-shadow-lg">
+                        <path d="M20 70 L60 20 L100 70 Z" fill="#4ADE80" stroke="#22C55E" strokeWidth="2" />
+                        <path d="M60 20 L60 70" stroke="#22C55E" strokeWidth="2" />
+                        <path d="M30 70 L90 70" stroke="#22C55E" strokeWidth="2" />
+                        <circle cx="45" cy="50" r="3" fill="#FFA700" />
+                      </svg>
+                    </div>
 
-                    <motion.div 
-                      className="absolute left-20 top-12"
-                      animate={{ y: [5, -5, 5] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <div className="w-6 h-6 bg-green-400 rounded-full opacity-40 blur-sm"></div>
-                    </motion.div>
+                    {/* Backpack */}
+                    <div className="absolute left-16 bottom-4">
+                      <svg width="40" height="50" viewBox="0 0 40 50" className="text-orange-500">
+                        <rect x="8" y="15" width="24" height="30" rx="4" fill="currentColor" />
+                        <rect x="12" y="10" width="16" height="8" rx="2" fill="currentColor" />
+                        <circle cx="20" cy="25" r="3" fill="#FFF" />
+                        <rect x="6" y="20" width="4" height="15" rx="2" fill="currentColor" />
+                        <rect x="30" y="20" width="4" height="15" rx="2" fill="currentColor" />
+                      </svg>
+                    </div>
+
+                    {/* Campfire */}
+                    <div className="absolute right-20 bottom-8">
+                      <svg width="30" height="30" viewBox="0 0 30 30">
+                        <circle cx="15" cy="20" r="8" fill="#FFA700" opacity="0.7" />
+                        <circle cx="15" cy="18" r="5" fill="#FF6B00" opacity="0.8" />
+                        <circle cx="15" cy="16" r="3" fill="#FF4500" />
+                      </svg>
+                    </div>
                   </div>
 
-                  {/* Product Info Cards */}
-                  <motion.div 
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.5, duration: 0.8 }}
-                    className="absolute -bottom-6 -right-6 bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-xl border border-gray-100 dark:border-gray-700"
-                  >
+                  {/* Product Info Overlay */}
+                  <div className="absolute -bottom-4 -right-4 bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-lg">
                     <div className="text-sm text-gray-500 dark:text-gray-400">محبوب‌ترین</div>
-                    <div className="font-bold text-gray-900 dark:text-white">چادر ۴ نفره</div>
-                    <div className="text-green-600 dark:text-green-400 font-bold">۱,۲۹۹ هزار تومان</div>
-                    <div className="flex items-center mt-2">
-                      {[...Array(5)].map((_, i) => (
-                        <StarIcon key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                      ))}
-                      <span className="text-xs text-gray-500 dark:text-gray-400 mr-2">(۱۲۴)</span>
-                    </div>
-                  </motion.div>
-
-                  <motion.div 
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.7, duration: 0.8 }}
-                    className="absolute -top-4 -left-4 bg-orange-500 text-white rounded-xl p-3 shadow-lg"
-                  >
-                    <div className="text-xs font-medium">تخفیف ویژه</div>
-                    <div className="text-lg font-bold">۲۰٪</div>
-                  </motion.div>
+                    <div className="font-semibold text-gray-900 dark:text-white">چادر ۴ نفره</div>
+                    <div className="text-green-600 font-bold">۱,۲۹۹ هزار تومان</div>
+                  </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Background Decorations */}
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              className="absolute top-10 -right-10 w-20 h-20 bg-orange-200 dark:bg-orange-800 rounded-full blur-xl opacity-60"
-            ></motion.div>
-            <motion.div 
-              animate={{ rotate: -360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute bottom-10 -left-10 w-32 h-32 bg-green-200 dark:bg-green-800 rounded-full blur-xl opacity-40"
-            ></motion.div>
-          </motion.div>
-        </motion.div>
+            <div className="absolute top-10 -right-10 w-20 h-20 bg-orange-200 dark:bg-orange-800/30 rounded-full blur-xl"></div>
+            <div className="absolute bottom-10 -left-10 w-32 h-32 bg-green-200 dark:bg-green-800/30 rounded-full blur-xl"></div>
+            <div className="absolute top-1/2 -right-20 w-16 h-16 bg-yellow-200 dark:bg-yellow-800/30 rounded-full blur-lg"></div>
+          </div>
+        </div>
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <div className="w-6 h-10 border-2 border-gray-400 dark:border-gray-600 rounded-full flex justify-center">
-          <motion.div 
-            className="w-1 h-3 bg-gray-600 dark:bg-gray-400 rounded-full mt-2"
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          ></motion.div>
-        </div>
-      </motion.div>
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </div>
     </section>
   )
 }
