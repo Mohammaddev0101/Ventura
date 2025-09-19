@@ -15,259 +15,105 @@ const seedData = async () => {
 
     console.log('Cleared existing data');
 
-    // Create admin user
-    const admin = new User({
-      name: 'مدیر سیستم',
-      email: 'admin@ventura.com',
-      password: 'admin123',
-      role: 'admin'
-    });
-    await admin.save();
-    console.log('Admin user created');
+    // Create 30 users
+    const users = [];
+    for (let i = 1; i <= 30; i++) {
+      users.push({
+        name: `کاربر ${i}`,
+        email: `user${i}@example.com`,
+        password: '1234',
+        phone: `0912345${String(i).padStart(4, '0')}`,
+        role: i === 1 ? 'admin' : 'user',
+        address: {
+          street: `خیابان ${i}`,
+          city: 'تهران',
+          state: 'تهران',
+          zipCode: `1234${String(i).padStart(2, '0')}`,
+          country: 'Iran'
+        }
+      });
+    }
+    
+    const createdUsers = await User.insertMany(users);
+    console.log('30 users created');
 
-    // Create categories
-    const categories = [
-      {
-        name: 'چادر و سرپناه',
-        description: 'انواع چادر و تجهیزات سرپناه',
-        icon: '🏕️'
-      },
-      {
-        name: 'کیسه خواب',
-        description: 'کیسه خواب برای فصول مختلف',
-        icon: '🛏️'
-      },
-      {
-        name: 'کوله پشتی',
-        description: 'کوله پشتی و کیف سفر',
-        icon: '🎒'
-      },
-      {
-        name: 'تجهیزات آشپزی',
-        description: 'وسایل آشپزی و غذاخوری',
-        icon: '🍳'
-      },
-      {
-        name: 'روشنایی',
-        description: 'چراغ قوه و تجهیزات روشنایی',
-        icon: '🔦'
-      },
-      {
-        name: 'لوازم جانبی',
-        description: 'سایر تجهیزات مورد نیاز',
-        icon: '🧰'
-      }
+    // Create 30 categories
+    const categories = [];
+    const categoryNames = [
+      'چادر و سرپناه', 'کیسه خواب', 'کوله پشتی', 'تجهیزات آشپزی', 'روشنایی',
+      'لوازم جانبی', 'صندلی و میز', 'ابزار و تجهیزات', 'پوشاک کوهنوردی', 'کفش کوهنوردی',
+      'تجهیزات ایمنی', 'طناب و بند', 'کمپاس و ناوبری', 'تجهیزات آب', 'غذای کوهنوردی',
+      'داروی اولیه', 'تجهیزات عکاسی', 'باتری و شارژر', 'تجهیزات ماهیگیری', 'تجهیزات شکار',
+      'دوربین و دوچشمی', 'تجهیزات نجوم', 'ورزش‌های آبی', 'دوچرخه سواری', 'اسکی و برف',
+      'کایاک و قایق', 'تجهیزات صخره نوردی', 'پاراگلایدر', 'موتور سیکلت', 'ماشین‌های آفرود'
     ];
+
+    for (let i = 0; i < 30; i++) {
+      categories.push({
+        name: categoryNames[i],
+        description: `دسته‌بندی ${categoryNames[i]} شامل انواع تجهیزات مربوطه`,
+        icon: '🏕️'
+      });
+    }
 
     const createdCategories = await Category.insertMany(categories);
-    console.log('Categories created');
+    console.log('30 categories created');
 
-    // Create products
-    const products = [
-      {
-        name: 'چادر کوهنوردی ۲ نفره',
-        description: 'چادر مقاوم و سبک مناسب برای کوهنوردی و کمپینگ. ساخته شده از مواد با کیفیت و ضد آب.',
-        shortDescription: 'چادر مقاوم ۲ نفره مناسب کوهنوردی',
-        price: 1299000,
-        originalPrice: 1599000,
-        discount: 19,
-        category: createdCategories[0]._id,
-        brand: 'Coleman',
-        images: [
-          { url: 'https://images.pexels.com/photos/2398220/pexels-photo-2398220.jpeg', alt: 'چادر کوهنوردی', isPrimary: true }
-        ],
-        specifications: [
-          { name: 'ظرفیت', value: '۲ نفر' },
-          { name: 'وزن', value: '۲.۵ کیلوگرم' },
-          { name: 'مقاومت آب', value: '۳۰۰۰ میلی‌متر' }
-        ],
-        features: ['ضد آب', 'سبک وزن', 'نصب آسان', 'مقاوم در برابر باد'],
-        stock: 15,
-        sku: 'TENT-001',
-        weight: 2.5,
-        isActive: true,
-        isFeatured: true,
-        isPopular: true,
-        tags: ['چادر', 'کوهنوردی', 'کمپینگ']
-      },
-      {
-        name: 'کیسه خواب زمستانی',
-        description: 'کیسه خواب گرم مناسب برای فصل زمستان و دماهای پایین تا منفی ۱۰ درجه.',
-        shortDescription: 'کیسه خواب گرم مناسب زمستان',
-        price: 899000,
-        originalPrice: 1099000,
-        discount: 18,
-        category: createdCategories[1]._id,
-        brand: 'North Face',
-        images: [
-          { url: 'https://images.pexels.com/photos/2398220/pexels-photo-2398220.jpeg', alt: 'کیسه خواب زمستانی', isPrimary: true }
-        ],
-        specifications: [
-          { name: 'دمای راحتی', value: '-۵ درجه سانتیگراد' },
-          { name: 'دمای حداقل', value: '-۱۰ درجه سانتیگراد' },
-          { name: 'وزن', value: '۱.۸ کیلوگرم' }
-        ],
-        features: ['عایق حرارتی عالی', 'قابل شستشو', 'فشرده شدنی', 'زیپ دو طرفه'],
-        stock: 20,
-        sku: 'SLEEP-001',
-        weight: 1.8,
-        isActive: true,
-        isFeatured: true,
-        tags: ['کیسه خواب', 'زمستان', 'گرم']
-      },
-      {
-        name: 'کوله پشتی ۵۰ لیتری',
-        description: 'کوله پشتی حرفه‌ای با ظرفیت ۵۰ لیتر مناسب برای سفرهای چند روزه.',
-        shortDescription: 'کوله پشتی ۵۰ لیتری حرفه‌ای',
-        price: 1599000,
-        originalPrice: 1899000,
-        discount: 16,
-        category: createdCategories[2]._id,
-        brand: 'Deuter',
-        images: [
-          { url: 'https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg', alt: 'کوله پشتی', isPrimary: true }
-        ],
-        specifications: [
-          { name: 'ظرفیت', value: '۵۰ لیتر' },
-          { name: 'وزن', value: '۲.۲ کیلوگرم' },
-          { name: 'ابعاد', value: '۷۰ × ۳۵ × ۲۵ سانتی‌متر' }
-        ],
-        features: ['سیستم تهویه پشت', 'جیب‌های متعدد', 'بند کمری', 'پوشش باران'],
-        stock: 12,
-        sku: 'BACK-001',
-        weight: 2.2,
-        isActive: true,
-        isPopular: true,
-        tags: ['کوله پشتی', 'سفر', 'کوهنوردی']
-      },
-      {
-        name: 'اجاق گاز پرتابل',
-        description: 'اجاق گاز کوچک و قابل حمل مناسب برای آشپزی در طبیعت.',
-        shortDescription: 'اجاق گاز کوچک قابل حمل',
-        price: 459000,
-        originalPrice: 529000,
-        discount: 13,
-        category: createdCategories[3]._id,
-        brand: 'Jetboil',
-        images: [
-          { url: 'https://images.pexels.com/photos/2398220/pexels-photo-2398220.jpeg', alt: 'اجاق گاز', isPrimary: true }
-        ],
-        specifications: [
-          { name: 'قدرت', value: '۳۵۰۰ وات' },
-          { name: 'وزن', value: '۴۵۰ گرم' },
-          { name: 'نوع سوخت', value: 'کپسول گاز' }
-        ],
-        features: ['سبک وزن', 'شعله قابل تنظیم', 'پایه‌های تاشو', 'ایمن'],
-        stock: 25,
-        sku: 'STOVE-001',
-        weight: 0.45,
-        isActive: true,
-        tags: ['اجاق گاز', 'آشپزی', 'پرتابل']
-      },
-      {
-        name: 'چراغ قوه LED قابل شارژ',
-        description: 'چراغ قوه قدرتمند با باتری قابل شارژ و نور بالا.',
-        shortDescription: 'چراغ قوه LED با باتری قابل شارژ',
-        price: 189000,
-        originalPrice: 229000,
-        discount: 17,
-        category: createdCategories[4]._id,
-        brand: 'Fenix',
-        images: [
-          { url: 'https://images.pexels.com/photos/2398220/pexels-photo-2398220.jpeg', alt: 'چراغ قوه', isPrimary: true }
-        ],
-        specifications: [
-          { name: 'قدرت نور', value: '۱۰۰۰ لومن' },
-          { name: 'مدت روشنایی', value: '۱۲ ساعت' },
-          { name: 'نوع باتری', value: 'لیتیوم یون قابل شارژ' }
-        ],
-        features: ['ضد آب', 'قابل شارژ', 'چند حالت نور', 'مقاوم'],
-        stock: 30,
-        sku: 'LIGHT-001',
-        weight: 0.2,
-        isActive: true,
-        isPopular: true,
-        tags: ['چراغ قوه', 'روشنایی', 'قابل شارژ']
-      },
-      {
-        name: 'صندلی تاشو کمپینگ',
-        description: 'صندلی راحت و سبک قابل حمل برای استراحت در طبیعت.',
-        shortDescription: 'صندلی تاشو راحت کمپینگ',
-        price: 329000,
-        originalPrice: 399000,
-        discount: 18,
-        category: createdCategories[5]._id,
-        brand: 'Helinox',
-        images: [
-          { url: 'https://images.pexels.com/photos/2398220/pexels-photo-2398220.jpeg', alt: 'صندلی کمپینگ', isPrimary: true }
-        ],
-        specifications: [
-          { name: 'ظرفیت وزن', value: '۱۲۰ کیلوگرم' },
-          { name: 'وزن', value: '۱.۲ کیلوگرم' },
-          { name: 'ابعاد', value: '۵۵ × ۶۵ × ۹۰ سانتی‌متر' }
-        ],
-        features: ['سبک وزن', 'تاشو', 'راحت', 'مقاوم'],
-        stock: 18,
-        sku: 'CHAIR-001',
-        weight: 1.2,
-        isActive: true,
-        tags: ['صندلی', 'کمپینگ', 'تاشو']
-      },
-      {
-        name: 'دوربین شکاری ۸x۲۵',
-        description: 'دوربین دوچشمی با کیفیت بالا مناسب برای رصد طبیعت و شکار.',
-        shortDescription: 'دوربین شکاری با کیفیت بالا',
-        price: 759000,
-        originalPrice: 899000,
-        discount: 16,
-        category: createdCategories[5]._id,
-        brand: 'Bushnell',
-        images: [
-          { url: 'https://images.pexels.com/photos/2398220/pexels-photo-2398220.jpeg', alt: 'دوربین شکاری', isPrimary: true }
-        ],
-        specifications: [
-          { name: 'بزرگنمایی', value: '۸ برابر' },
-          { name: 'قطر عدسی', value: '۲۵ میلی‌متر' },
-          { name: 'میدان دید', value: '۱۲۶ متر در ۱۰۰۰ متر' }
-        ],
-        features: ['لنز با پوشش چندلایه', 'ضد آب', 'مقاوم', 'کیف حمل'],
-        stock: 8,
-        sku: 'BINO-001',
-        weight: 0.6,
-        isActive: true,
-        isPopular: true,
-        tags: ['دوربین', 'شکار', 'رصد']
-      },
-      {
-        name: 'عینک آفتابی کوهنوردی',
-        description: 'عینک آفتابی با محافظت UV مناسب برای کوهنوردی و ورزش‌های کوهستانی.',
-        shortDescription: 'عینک آفتابی ورزشی با محافظت UV',
-        price: 149000,
-        originalPrice: 189000,
-        discount: 21,
-        category: createdCategories[5]._id,
-        brand: 'Oakley',
-        images: [
-          { url: 'https://images.pexels.com/photos/2398220/pexels-photo-2398220.jpeg', alt: 'عینک آفتابی', isPrimary: true }
-        ],
-        specifications: [
-          { name: 'محافظت UV', value: '۱۰۰٪' },
-          { name: 'وزن', value: '۳۰ گرم' },
-          { name: 'جنس فریم', value: 'پلاستیک مقاوم' }
-        ],
-        features: ['ضد خش', 'سبک وزن', 'طراحی ورزشی', 'محافظت کامل'],
-        stock: 22,
-        sku: 'GLASS-001',
-        weight: 0.03,
-        isActive: true,
-        tags: ['عینک', 'آفتابی', 'کوهنوردی']
-      }
+    // Create 30 products
+    const products = [];
+    const productNames = [
+      'چادر کوهنوردی ۲ نفره', 'کیسه خواب زمستانی', 'کوله پشتی ۵۰ لیتری', 'اجاق گاز پرتابل',
+      'چراغ قوه LED قابل شارژ', 'صندلی تاشو کمپینگ', 'میز تاشو آلومینیومی', 'چاقوی چندکاره',
+      'کاپشن کوهنوردی', 'کفش کوهنوردی مردانه', 'کلاه ایمنی', 'طناب کوهنوردی ۱۰ متری',
+      'قطب نما دیجیتال', 'بطری آب ۱ لیتری', 'غذای خشک کوهنوردی', 'کیت کمک‌های اولیه',
+      'دوربین ورزشی', 'پاور بانک خورشیدی', 'قلاب ماهیگیری', 'تیر و کمان شکاری',
+      'دوربین شکاری ۸x۲۵', 'تلسکوپ قابل حمل', 'لباس غواصی', 'دوچرخه کوهستان', 'اسکی آلپاین',
+      'کایاک تک نفره', 'هارنس صخره نوردی', 'چتر پاراگلایدر', 'موتور تریل', 'جیپ آفرود'
     ];
 
+    for (let i = 0; i < 30; i++) {
+      const basePrice = Math.floor(Math.random() * 2000000) + 100000;
+      const discount = Math.floor(Math.random() * 30);
+      const originalPrice = Math.floor(basePrice / (1 - discount / 100));
+
+      products.push({
+        name: productNames[i],
+        description: `${productNames[i]} با کیفیت بالا و مناسب برای استفاده در طبیعت. این محصول دارای ویژگی‌های منحصر به فرد و کاربردی است که آن را به انتخابی ایده‌آل برای علاقه‌مندان به طبیعت‌گردی تبدیل می‌کند.`,
+        shortDescription: `${productNames[i]} با کیفیت بالا`,
+        price: basePrice,
+        originalPrice: originalPrice,
+        discount: discount,
+        category: createdCategories[i]._id,
+        brand: ['Coleman', 'North Face', 'Deuter', 'Jetboil', 'Fenix', 'Helinox'][Math.floor(Math.random() * 6)],
+        images: [
+          { url: 'https://images.pexels.com/photos/2398220/pexels-photo-2398220.jpeg', alt: productNames[i], isPrimary: true }
+        ],
+        specifications: [
+          { name: 'وزن', value: `${Math.floor(Math.random() * 5) + 1} کیلوگرم` },
+          { name: 'ابعاد', value: `${Math.floor(Math.random() * 50) + 20} × ${Math.floor(Math.random() * 30) + 10} سانتی‌متر` },
+          { name: 'مواد', value: 'آلومینیوم و پلاستیک مقاوم' }
+        ],
+        features: ['مقاوم', 'سبک وزن', 'قابل حمل', 'کیفیت بالا'],
+        stock: Math.floor(Math.random() * 50) + 5,
+        sku: `VNT-${String(i + 1).padStart(3, '0')}`,
+        weight: Math.random() * 5 + 0.5,
+        isActive: true,
+        isFeatured: Math.random() > 0.7,
+        isPopular: Math.random() > 0.6,
+        tags: ['کمپینگ', 'طبیعت‌گردی', 'کوهنوردی'],
+        rating: {
+          average: Math.random() * 2 + 3, // 3-5 stars
+          count: Math.floor(Math.random() * 200) + 10
+        }
+      });
+    }
+
     await Product.insertMany(products);
-    console.log('Products created');
+    console.log('30 products created');
 
     console.log('Seed data completed successfully!');
+    console.log('Admin user: user1@example.com / 1234');
+    console.log('Regular users: user2@example.com to user30@example.com / 1234');
     process.exit(0);
   } catch (error) {
     console.error('Seed error:', error);
