@@ -1,157 +1,260 @@
 'use client'
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useCart } from '@/context/CartContext'
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent } from '@/components/ui/Card'
-import { HeartIcon, ShoppingCartIcon, EyeIcon } from '@heroicons/react/24/outline'
+import { 
+  HeartIcon, 
+  ShoppingCartIcon, 
+  EyeIcon,
+  StarIcon,
+  TagIcon
+} from '@heroicons/react/24/outline'
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid'
-import { formatPrice } from '@/lib/utils'
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, viewMode = 'grid' }) {
   const [isWishlisted, setIsWishlisted] = useState(false)
-  const { addToCart } = useCart()
-
-  const handleAddToCart = () => {
-    addToCart({
-      id: product._id,
-      name: product.name,
-      price: product.price,
-      image: product.images?.[0]?.url
-    })
-  }
+  const [isHovered, setIsHovered] = useState(false)
 
   const toggleWishlist = () => {
     setIsWishlisted(!isWishlisted)
-    // Add to wishlist logic here
   }
 
-  const discountPercentage = product.originalPrice 
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-    : 0
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('fa-IR').format(price)
+  }
+
+  if (viewMode === 'list') {
+    return (
+      <motion.div
+        whileHover={{ scale: 1.02 }}
+        onHoverStart={() => setIsHovered(true)}
+        onHoverEnd={() => setIsHovered(false)}
+        className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+      >
+        <div className="flex">
+          {/* Image */}
+          <div className="w-48 h-48 bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 flex items-center justify-center relative overflow-hidden">
+            <div className="text-6xl opacity-70">🏕️</div>
+            {product.discount && (
+              <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                {product.discount}٪ تخفیف
+              </div>
+            )}
+          </div>
+
+          {/* Content */}
+          <div className="flex-1 p-6 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">
+                  {product.category}
+                </span>
+                <button
+                  onClick={toggleWishlist}
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
+                >
+                  {isWishlisted ? (
+                    <HeartSolidIcon className="w-5 h-5 text-red-500" />
+                  ) : (
+                    <HeartIcon className="w-5 h-5 text-gray-400" />
+                  )}
+                </button>
+              </div>
+
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 hover:text-emerald-600 transition-colors">
+                <Link href={`/products/${product.id}`}>
+                  {product.name}
+                </Link>
+              </h3>
+
+              {/* Rating */}
+              <div className="flex items-center space-x-2 space-x-reverse mb-4">
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <StarIcon
+                      key={i}
+                      className={`w-4 h-4 ${
+                        i < Math.floor(product.rating?.average || 0)
+                          ? 'fill-yellow-400 text-yellow-400'
+                          : 'text-gray-300'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <span className="text-sm text-gray-500">
+                  ({product.rating?.count || 0})
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3 space-x-reverse">
+                <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                  {formatPrice(product.price)} تومان
+                </span>
+                {product.originalPrice && (
+                  <span className="text-lg text-gray-500 line-through">
+                    {formatPrice(product.originalPrice)}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex items-center space-x-2 space-x-reverse">
+                <Button variant="outline" size="sm" asChild>
+                  <Link href={`/products/${product.id}`}>
+                    <EyeIcon className="w-4 h-4 ml-1" />
+                    مشاهده
+                  </Link>
+                </Button>
+                <Button size="sm">
+                  <ShoppingCartIcon className="w-4 h-4 ml-1" />
+                  افزودن
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    )
+  }
 
   return (
-    <Card className="group overflow-hidden hover:shadow-xl transition-all duration-300">
-      <div className="relative overflow-hidden">
-        {/* Product Image */}
-        <div className="w-full h-48 bg-gradient-to-br from-primary-light to-primary/20 flex items-center justify-center">
-          <div className="text-4xl opacity-50">
-            {product.category?.name === 'چادر و سرپناه' && '🏕️'}
-            {product.category?.name === 'کوله پشتی' && '🎒'}
-            {product.category?.name === 'کیسه خواب' && '🛏️'}
-            {product.category?.name === 'تجهیزات آشپزی' && '🍳'}
-            {product.category?.name === 'روشنایی' && '🔦'}
-            {product.category?.name === 'لوازم جانبی' && '🧰'}
-          </div>
-        </div>
+    <motion.div
+      whileHover={{ y: -8 }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      className="group"
+    >
+      <Card className="overflow-hidden bg-white dark:bg-gray-800 border-0 shadow-lg hover:shadow-2xl transition-all duration-500">
+        <div className="relative overflow-hidden">
+          {/* Product Image */}
+          <div className="w-full h-64 bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 flex items-center justify-center relative">
+            <motion.div
+              animate={isHovered ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
+              transition={{ duration: 0.3 }}
+              className="text-6xl opacity-70"
+            >
+              🏕️
+            </motion.div>
 
-        {/* Discount Badge */}
-        {discountPercentage > 0 && (
-          <div className="absolute top-3 left-3">
-            <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium">
-              {discountPercentage}٪ تخفیف
-            </span>
-          </div>
-        )}
-
-        {/* Quick Actions */}
-        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-3 space-x-reverse">
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={toggleWishlist}
-            className="bg-white hover:bg-primary hover:text-white"
-          >
-            {isWishlisted ? (
-              <HeartSolidIcon className="w-5 h-5 text-red-500" />
-            ) : (
-              <HeartIcon className="w-5 h-5" />
-            )}
-          </Button>
-          
-          <Button
-            size="icon"
-            variant="ghost"
-            asChild
-            className="bg-white hover:bg-primary hover:text-white"
-          >
-            <Link href={`/products/${product.slug || product._id}`}>
-              <EyeIcon className="w-5 h-5" />
-            </Link>
-          </Button>
-          
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={handleAddToCart}
-            className="bg-white hover:bg-primary hover:text-white"
-          >
-            <ShoppingCartIcon className="w-5 h-5" />
-          </Button>
-        </div>
-      </div>
-
-      <CardContent className="p-4">
-        {/* Category */}
-        <div className="mb-2">
-          <span className="text-xs text-primary font-medium">
-            {product.category?.name}
-          </span>
-        </div>
-
-        {/* Product Name */}
-        <h3 className="font-medium text-text-dark dark:text-white mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-          <Link href={`/products/${product.slug || product._id}`}>
-            {product.name}
-          </Link>
-        </h3>
-
-        {/* Rating */}
-        <div className="flex items-center space-x-1 space-x-reverse mb-3">
-          <div className="flex items-center">
-            {[...Array(5)].map((_, i) => (
-              <svg
-                key={i}
-                className={`w-4 h-4 ${
-                  i < Math.floor(product.rating?.average || 0)
-                    ? 'text-auxiliary-orange'
-                    : 'text-neutral-light'
-                }`}
-                fill="currentColor"
-                viewBox="0 0 20 20"
+            {/* Discount Badge */}
+            {product.discount && (
+              <motion.div
+                initial={{ scale: 0, rotate: -45 }}
+                animate={{ scale: 1, rotate: -45 }}
+                className="absolute top-3 left-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg"
               >
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-            ))}
+                {product.discount}٪ تخفیف
+              </motion.div>
+            )}
+
+            {/* Quick Actions */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isHovered ? 1 : 0 }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0 bg-black/40 flex items-center justify-center space-x-3 space-x-reverse"
+            >
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={toggleWishlist}
+                className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all"
+              >
+                {isWishlisted ? (
+                  <HeartSolidIcon className="w-6 h-6 text-red-500" />
+                ) : (
+                  <HeartIcon className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+                )}
+              </motion.button>
+
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Button asChild size="sm" className="shadow-lg">
+                  <Link href={`/products/${product.id}`}>
+                    <EyeIcon className="w-4 h-4 ml-1" />
+                    مشاهده
+                  </Link>
+                </Button>
+              </motion.div>
+
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="w-12 h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all"
+              >
+                <ShoppingCartIcon className="w-6 h-6" />
+              </motion.button>
+            </motion.div>
           </div>
-          <span className="text-sm text-neutral-gray">
-            ({product.rating?.count || 0})
-          </span>
         </div>
 
-        {/* Price */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2 space-x-reverse">
-            <span className="text-lg font-bold text-primary">
-              {formatPrice(product.price)} تومان
+        <CardContent className="p-6">
+          {/* Category */}
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center space-x-2 space-x-reverse">
+              <TagIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">
+                {product.category}
+              </span>
+            </div>
+            <span className="text-xs text-gray-500 dark:text-gray-400">
+              {product.brand}
             </span>
+          </div>
+
+          {/* Product Name */}
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 group-hover:text-emerald-600 transition-colors">
+            <Link href={`/products/${product.id}`}>
+              {product.name}
+            </Link>
+          </h3>
+
+          {/* Rating */}
+          <div className="flex items-center space-x-2 space-x-reverse mb-4">
+            <div className="flex items-center">
+              {[...Array(5)].map((_, i) => (
+                <StarIcon
+                  key={i}
+                  className={`w-4 h-4 ${
+                    i < Math.floor(product.rating?.average || 0)
+                      ? 'fill-yellow-400 text-yellow-400'
+                      : 'text-gray-300'
+                  }`}
+                />
+              ))}
+            </div>
+            <span className="text-sm text-gray-500">
+              ({product.rating?.count || 0})
+            </span>
+          </div>
+
+          {/* Price */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-2 space-x-reverse">
+              <span className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
+                {formatPrice(product.price)}
+              </span>
+              <span className="text-sm text-gray-900 dark:text-white">تومان</span>
+            </div>
             {product.originalPrice && (
-              <span className="text-sm text-neutral-gray line-through">
+              <span className="text-sm text-gray-500 line-through">
                 {formatPrice(product.originalPrice)}
               </span>
             )}
           </div>
-        </div>
 
-        {/* Add to Cart Button */}
-        <Button
-          onClick={handleAddToCart}
-          className="w-full mt-4"
-          size="sm"
-        >
-          افزودن به سبد
-        </Button>
-      </CardContent>
-    </Card>
+          {/* Add to Cart Button */}
+          <Button className="w-full group-hover:bg-emerald-700 transition-colors">
+            <ShoppingCartIcon className="w-4 h-4 ml-2" />
+            افزودن به سبد خرید
+          </Button>
+        </CardContent>
+      </Card>
+    </motion.div>
   )
 }

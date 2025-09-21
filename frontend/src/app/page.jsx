@@ -7,6 +7,18 @@ import PopularProducts from '@/components/PopularProducts'
 import Newsletter from '@/components/Newsletter'
 import Footer from '@/components/Footer'
 
+export const metadata = {
+  title: 'ونتورا - فروشگاه تجهیزات کمپینگ و طبیعت‌گردی',
+  description: 'بهترین تجهیزات کمپینگ، کوهنوردی و طبیعت‌گردی را از ونتورا بخرید. چادر، کوله پشتی، لوازم آشپزی و تجهیزات حرفه‌ای',
+  keywords: 'کمپینگ, چادر, کوله پشتی, طبیعت گردی, کوهنوردی, تجهیزات سفر',
+  openGraph: {
+    title: 'ونتورا - فروشگاه تجهیزات کمپینگ',
+    description: 'بهترین تجهیزات کمپینگ و طبیعت‌گردی',
+    type: 'website',
+    locale: 'fa_IR',
+  },
+}
+
 export default function Home() {
   return (
     <main className="min-h-screen">

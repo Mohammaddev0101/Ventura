@@ -2,23 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
   font-family: "moraba";
   src: url("../fonts/Morabba/woff2/Morabba-Medium.woff2") format('woff2');
   font-display: swap;
-  /* IE9 Compat Modes */
 }
 
 @font-face {
   font-family: "dana";
   src: url("../fonts/Dana/woff2/DanaFaNum-Medium.woff2") format('woff2');
   font-display: swap;
-  /* IE9 Compat Modes */
 }
 
-
-/* Define CSS custom properties with modern color spaces */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -44,7 +39,7 @@
   }
 
   .dark {
-    --background: 242.2 84% 4.9%;
+    --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -70,8 +65,6 @@
   border-color: hsl(var(--border));
 }
 
-
-/* RTL Support */
 html {
   direction: rtl;
 }
@@ -83,7 +76,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.moraba{
+.moraba {
   font-family: "moraba" !important;
 }
 
@@ -107,12 +100,9 @@ body {
 
 /* Animations */
 @keyframes float {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0px);
   }
-
   50% {
     transform: translateY(-20px);
   }
@@ -123,7 +113,6 @@ body {
     opacity: 0;
     transform: translateY(30px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -135,7 +124,6 @@ body {
     opacity: 0;
     transform: translateX(-30px);
   }
-
   to {
     opacity: 1;
     transform: translateX(0);
@@ -143,36 +131,24 @@ body {
 }
 
 @keyframes pulse {
-
-  0%,
-  100% {
+  0%, 100% {
     opacity: 1;
   }
-
   50% {
     opacity: 0.5;
   }
 }
 
 @keyframes bounce {
-
-  0%,
-  20%,
-  53%,
-  80%,
-  100% {
+  0%, 20%, 53%, 80%, 100% {
     transform: translateY(0);
   }
-
-  40%,
-  43% {
+  40%, 43% {
     transform: translateY(-30px);
   }
-
   70% {
     transform: translateY(-15px);
   }
-
   90% {
     transform: translateY(-4px);
   }
@@ -274,13 +250,8 @@ body {
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Parallax effect */
