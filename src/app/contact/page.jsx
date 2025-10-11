@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { PhoneIcon, EnvelopeIcon, MapPinIcon, ClockIcon, CheckCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import { API_BASE_URL } from '@/context/AuthContext'
 import { useAlertDialog } from '@/components/ui/AlertDialog'
-import { Accordion, AccordionItem, AccordionTrigger ,AccordionContent } from '@/components/ui/Accordion'
+import { Accordion, AccordionItem, AccordionTrigger ,AccordionContent } from '@/components/ui/accordion'
 
 
 const faqs = [
