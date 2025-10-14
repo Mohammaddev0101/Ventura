@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
-import { Card, CardContent } from "./ui/card";
+import { Card, CardContent } from "@/components/ui/Card";
 import { TagIcon, UserIcon, CalendarIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
 import { formatDate } from '@/lib/utils'
 
@@ -131,5 +131,6 @@ const BlogSection = () => {
     </section>
   );
 };
+
 
 export default BlogSection;
