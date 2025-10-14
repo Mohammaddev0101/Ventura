@@ -6,7 +6,7 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 const AuthContext = createContext()
 
 // Shared API base URL for the entire frontend
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000' //http://localhost:5000 https://ventura-qfwy.onrender.com
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://ventura-qfwy.onrender.com' //http://localhost:5000 https://ventura-qfwy.onrender.com
 
 // Set axios default base URL once (affects all axios calls if not overridden)
 axios.defaults.baseURL = API_BASE_URL
