@@ -58,7 +58,7 @@ export default function FeaturedProducts() {
 
   if (loading) {
     return (
-      <section className="py-16 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-800" ref={ref}>
+      <section className="py-16 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden" ref={ref}>
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
@@ -82,7 +82,7 @@ export default function FeaturedProducts() {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-800" ref={ref}>
+    <section className="py-16 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden" ref={ref}>
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Section Header */}
         <motion.div

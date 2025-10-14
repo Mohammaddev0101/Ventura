@@ -7,6 +7,8 @@ import PopularProducts from '@/components/PopularProducts'
 import WeeklyDeals from '@/components/WeeklyDeals'
 import Newsletter from '@/components/Newsletter'
 import Footer from '@/components/Footer'
+import BlogSection from '@/components/BlogSection'
+
 
 export const metadata = {
   title: 'ونتورا - فروشگاه تجهیزات کمپینگ و طبیعت‌گردی',
@@ -21,6 +23,8 @@ export const metadata = {
 }
 
 export default function Home() {
+
+
   return (
     <main className="overflow-x-hidden">
       <Header />
@@ -28,8 +32,9 @@ export default function Home() {
       <Categories />
       <FeaturedProducts />
       <WeeklyDeals />
-      <BrandShowcase />
       <PopularProducts />
+      <BrandShowcase />
+      <BlogSection />
       {/* <Newsletter /> */}
       <Footer />
     </main>

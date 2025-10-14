@@ -229,25 +229,49 @@ export default function ProductsPage() {
         </section>
 
         {/* Filters Section */}
-        <section className="py-6  backdrop-blur border-t border-gray-200 dark:border-gray-700 sticky top-0 z-30">
+        <section className="py-6  backdrop-blur border-t border-gray-200 dark:border-gray-700 z-30">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-              {/* Category Filters */}
-              <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                {categories.map((category) => (
-                  <Button
-                    key={category}
-                    variant={filters.category === category || (category === 'همه محصولات' && !filters.category) ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setFilters(prev => ({ ...prev, category: category === 'همه محصولات' ? '' : category }))}
-                    className={`rounded-full px-4 py-2 font-medium transition-all duration-200 ${filters.category === category || (category === 'همه محصولات' && !filters.category) ? 'shadow-md bg-gradient-to-r from-emerald-400 to-cyan-400 text-white' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700'}`}
-                  >
-                    {category}
-                  </Button>
-                ))}
+              {/* Category Filters as horizontal slider */}
+              <div
+                className="w-full overflow-x-auto scrollbar-hide py-2"
+                style={{ WebkitOverflowScrolling: 'touch', direction: 'rtl' }}
+              >
+                <div className="flex flex-nowrap gap-2 min-w-max justify-center md:justify-start px-1">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={filters.category === category || (category === 'همه محصولات' && !filters.category) ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() =>
+                        setFilters((prev) => ({
+                          ...prev,
+                          category: category === 'همه محصولات' ? '' : category,
+                        }))
+                      }
+                      className={`rounded-full px-4 py-2 font-medium transition-all duration-200 whitespace-nowrap ${
+                        filters.category === category ||
+                        (category === 'همه محصولات' && !filters.category)
+                          ? 'shadow-md bg-gradient-to-r from-emerald-400 to-cyan-400 text-white'
+                          : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700'
+                      }`}
+                    >
+                      {category}
+                    </Button>
+                  ))}
+                </div>
+                <style jsx global>{`
+                  .scrollbar-hide::-webkit-scrollbar {
+                    display: none;
+                  }
+                  .scrollbar-hide {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                  }
+                `}</style>
               </div>
               {/* View Controls */}
-              <div className="flex items-center gap-4">
+              <div className="items-center gap-4 hidden md:flex">
                 <span className="text-base text-gray-700 dark:text-gray-300 font-semibold">
                   {filteredProducts.length} محصول
                 </span>
@@ -370,27 +394,41 @@ export default function ProductsPage() {
                 با بهترین برندهای دنیا همراه باشید
               </p>
             </motion.div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-              {brands.slice(1).map((brand, index) => (
-                <motion.div
-                  key={brand}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.08 }}
-                  whileHover={{ scale: 1.07 }}
-                  className="bg-white/90 dark:bg-gray-800/90 rounded-2xl p-6 text-center shadow-lg hover:shadow-2xl transition-all cursor-pointer border border-transparent hover:border-emerald-400"
-                  onClick={() => setFilters(prev => ({ ...prev, brand }))}
-                >
-                  <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-lg flex items-center justify-center mx-auto mb-3 shadow">
-                    <span className="text-white font-extrabold text-2xl">
-                      {brand.charAt(0)}
-                    </span>
-                  </div>
-                  <h3 className="font-bold text-gray-900 dark:text-white text-lg">
-                    {brand}
-                  </h3>
-                </motion.div>
-              ))}
+            <div
+              className="w-full overflow-x-auto scrollbar-hide py-2"
+              style={{ WebkitOverflowScrolling: 'touch', direction: 'rtl' }}
+            >
+              <div className="flex flex-nowrap gap-4 min-w-max justify-center md:justify-start px-1">
+                {brands.slice(1).map((brand, index) => (
+                  <motion.div
+                    key={brand}
+                    initial={{ opacity: 0, y: 0 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.08 }}
+                    whileHover={{ scale: 1.07 }}
+                    className="bg-white/90 dark:bg-gray-800/90 rounded-2xl p-6 text-center shadow-lg hover:shadow-2xl transition-all cursor-pointer border border-transparent hover:border-emerald-400 w-[140px]"
+                    onClick={() => setFilters(prev => ({ ...prev, brand }))}
+                  >
+                    <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-lg flex items-center justify-center mx-auto mb-3 shadow">
+                      <span className="text-white font-extrabold text-2xl">
+                        {brand.charAt(0)}
+                      </span>
+                    </div>
+                    <h3 className="font-bold text-gray-900 dark:text-white text-lg">
+                      {brand}
+                    </h3>
+                  </motion.div>
+                ))}
+              </div>
+              <style jsx global>{`
+                .scrollbar-hide::-webkit-scrollbar {
+                  display: none;
+                }
+                .scrollbar-hide {
+                  -ms-overflow-style: none;
+                  scrollbar-width: none;
+                }
+              `}</style>
             </div>
           </div>
         </section>

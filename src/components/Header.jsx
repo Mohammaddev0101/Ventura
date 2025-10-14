@@ -47,6 +47,7 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+
   // Fetch categories from backend
   useEffect(() => {
     async function fetchCategories() {
@@ -185,16 +186,16 @@ export default function Header() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link href="/" className="flex items-center space-x-2">
-                <div className="text-2xl font-medium font-sans">
-                  VENTURA
-                </div>
+              <Link href="/" className="flex items-center space-x-2 gap-x-3">
                 <Image
                   src="/img/logo.png"
                   width={30}
                   height={30}
                   alt="VENTURA"
                 />
+                <div className="text-3xl font-medium moraba ">
+                  ونتورا
+                </div>
               </Link>
             </motion.div>
 

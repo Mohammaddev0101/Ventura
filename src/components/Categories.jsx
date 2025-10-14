@@ -59,7 +59,11 @@ export default function Categories() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center bg-white/40 dark:bg-emerald-900/40 backdrop-blur-md px-5 py-2 rounded-full mb-7 border border-emerald-200/40 dark:border-emerald-800/40 shadow-md shadow-emerald-100/30 dark:shadow-emerald-900/20">
-            <span className="text-emerald-600 dark:text-emerald-400 tracking-wide text-md">دسته‌بندی‌های ونتورا</span>
+            <span className="text-emerald-600 dark:text-emerald-400 tracking-wide text-md flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6Z" />
+            </svg> دسته‌بندی‌های ونتورا
+            </span>
           </div>
           <h2 className="text-2xl lg:text-5xl font-extrabold bg-gradient-to-r from-gray-900 via-emerald-600 to-teal-400 dark:from-white dark:via-emerald-400 dark:to-teal-300 bg-clip-text text-transparent mb-5 drop-shadow-lg moraba">
             تجهیزات ماجراجویی خود را انتخاب کنید
@@ -95,7 +99,7 @@ export default function Categories() {
                         className="mx-auto rounded-xl bg-emerald-100 dark:bg-gray-900 dark:border dark:border-emerald-900/30 p-2"
                       />
                     </div>
-                    <h3 className="text-lg text-gray-900 dark:text-white mb-1">
+                    <h3 className="text-lg text-gray-900 dark:text-white mb-1 moraba">
                       {category.name}
                     </h3>
                   </div>

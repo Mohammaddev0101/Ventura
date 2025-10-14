@@ -10,6 +10,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import ProductCart from '@/components/ProductCard'
+import axios from 'axios';
 
 export default function PopularProducts() {
   const [ref, inView] = useInView({
@@ -23,44 +24,15 @@ export default function PopularProducts() {
 
   useEffect(() => {
     // Mock data for popular products
-    setProducts([
-      {
-        _id: '4',
-        name: 'دوربین شکاری ۸x۲۵',
-        price: 459000,
-        originalPrice: 529000,
-        category: { name: 'تجهیزات نظارتی' },
-        rating: { average: 4.5, count: 67 },
-        images: [{ url: 'https://images.pexels.com/photos/2398220/pexels-photo-2398220.jpeg' }]
-      },
-      {
-        _id: '5',
-        name: 'عینک آفتابی کوهنوردی',
-        price: 189000,
-        originalPrice: 229000,
-        category: { name: 'لوازم جانبی' },
-        rating: { average: 4.3, count: 43 },
-        images: [{ url: 'https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg' }]
-      },
-      {
-        _id: '6',
-        name: 'کیسه خواب تابستانی',
-        price: 329000,
-        originalPrice: 399000,
-        category: { name: 'کیسه خواب' },
-        rating: { average: 4.6, count: 89 },
-        images: [{ url: 'https://images.pexels.com/photos/2398220/pexels-photo-2398220.jpeg' }]
-      },
-      {
-        _id: '7',
-        name: 'چراغ قوه LED قابل شارژ',
-        price: 149000,
-        originalPrice: 179000,
-        category: { name: 'روشنایی' },
-        rating: { average: 4.7, count: 156 },
-        images: [{ url: 'https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg' }]
-      }
-    ])
+    axios.get('/api/products?sort=rating&limit=10&popular=true')
+      .then((res) => {
+        setProducts(res.data.products || []);
+        setLoading(false);
+      })
+      .catch(() => {
+        setProducts([]);
+        setLoading(false);
+      });
     setLoading(false)
   }, [])
 
@@ -121,7 +93,10 @@ export default function PopularProducts() {
         >
           <div>
             <div className="inline-flex items-center bg-emerald-100/50 dark:bg-emerald-900/30 backdrop-blur-sm px-5 py-2 rounded-full mb-4 border border-emerald-200/50 dark:border-emerald-800/50">
-              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">محصولات پرفروش ونتورا</span>
+              <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
+              </svg>
+                محصولات پرفروش ونتورا</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black bg-gradient-to-r from-gray-900 to-emerald-600 dark:from-white dark:to-emerald-400 bg-clip-text text-transparent moraba">
               محبوب‌ترین تجهیزات
@@ -167,7 +142,7 @@ export default function PopularProducts() {
           <Swiper
             modules={[Navigation, Autoplay, Pagination]}
             spaceBetween={24}
-            slidesPerView={1}
+            slidesPerView={2}
             breakpoints={{
               640: { slidesPerView: 2 },
               1024: { slidesPerView: 4 }

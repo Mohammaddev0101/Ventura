@@ -32,13 +32,13 @@ export default function BrandShowcase() {
           className="mb-16"
         >
           <div className="bg-gradient-to-r from-orange-100/50 to-orange-50/50 dark:from-orange-900/20 dark:to-orange-800/20 backdrop-blur-sm rounded-3xl p-8 lg:p-12 border border-orange-200/30 dark:border-orange-800/30">
-            <div className="grid lg:grid-cols-2 gap-8 items-center">
+            <div className="grid lg:grid-cols-2 gap-8 items-center pb-10 md:pb-0">
               {/* Content */}
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="space-y-6"
+                className="space-y-6 mb-14 md:mb-0"
               >
                 <div className="flex items-center gap-4">
                   <motion.div
@@ -62,7 +62,7 @@ export default function BrandShowcase() {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-gradient-to-r from-orange-500 mt-7 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="bg-gradient-to-r from-orange-500 mt-7 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     مشاهده محصولات
                   </motion.button>
@@ -99,34 +99,49 @@ export default function BrandShowcase() {
         </motion.div>
 
         {/* Brands Grid */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-6"
+        <div
+          className="w-full overflow-x-auto scrollbar-hide py-2"
+          style={{ WebkitOverflowScrolling: 'touch', direction: 'rtl' }}
         >
-          {brands.map((brand, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={inView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-              className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-md rounded-xl p-6 flex items-center justify-center hover:shadow-xl transition-all duration-300 cursor-pointer group border border-gray-100/20 dark:border-gray-700/20"
-            >
-              <div className="text-center flex items-center justify-center flex-col">
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="w-14 h-14 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 rounded-lg flex items-center justify-center mb-2 group-hover:bg-gradient-to-br group-hover:from-emerald-500 group-hover:to-teal-500 group-hover:text-white transition-all duration-300 shadow-md"
-                >
-                  <span className="font-bold text-sm">{brand.logo}</span>
-                </motion.div>
-                <div className="text-sm font-semibold text-gray-600 dark:text-gray-300 group-hover:bg-clip-text group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-emerald-500 group-hover:to-teal-500 dark:group-hover:from-emerald-400 dark:group-hover:to-teal-400 transition-all duration-300">
-                  {brand.name}
+          <div className="flex flex-nowrap gap-4 min-w-max justify-center md:justify-start px-1">
+            {brands.map((brand, index) => (
+              <motion.div
+                key={brand.name || index}
+                initial={{ opacity: 0, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.08 }}
+                whileHover={{ scale: 1.07 }}
+                className="bg-white/90 dark:bg-gray-800/90 rounded-2xl p-6 text-center shadow-lg hover:shadow-2xl transition-all cursor-pointer border border-transparent hover:border-emerald-400 w-[140px]"
+              >
+                <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-cyan-500 dark:from-gray-800 dark:to-gray-700 rounded-lg flex items-center justify-center mx-auto mb-3 shadow">
+                  <span className="text-white dark:text-gray-200 font-extrabold text-xl">
+                    {brand.logo ? brand.logo : (brand.name ? brand.name.charAt(0) : '')}
+                  </span>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                <h3 
+                  className="text-gray-900 dark:text-white text-md truncate max-w-full"
+                  style={{
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis"
+                  }}
+                  title={brand.name}
+                >
+                  {brand.name}
+                </h3>
+              </motion.div>
+            ))}
+          </div>
+          <style jsx global>{`
+            .scrollbar-hide::-webkit-scrollbar {
+              display: none;
+            }
+            .scrollbar-hide {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+          `}</style>
+        </div>
       </div>
     </section>
   )

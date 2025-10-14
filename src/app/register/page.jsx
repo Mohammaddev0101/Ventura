@@ -92,12 +92,12 @@ export default function RegisterPage() {
           <Link href="/" className="inline-flex items-center space-x-3 space-x-reverse group">
             <div className="relative">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
-                <span className="text-white font-bold text-2xl">V</span>
+                <span className="text-white font-bold text-2xl mt-2">V</span>
               </div>
               <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
             </div>
             <div>
-              <span className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
+              <span className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent moraba">
                 ونتورا
               </span>
               <div className="text-sm text-gray-500 dark:text-gray-400">تجهیزات کمپینگ</div>
@@ -111,7 +111,7 @@ export default function RegisterPage() {
               ایجاد حساب کاربری
             </CardTitle>
             <p className="text-gray-600 dark:text-gray-400 mt-2">
-              به جمع ماجراجویان ونتورا بپیوندید
+              به جمع ماجراجویان <span className='moraba'>ونتورا</span> بپیوندید
             </p>
           </CardHeader>
           

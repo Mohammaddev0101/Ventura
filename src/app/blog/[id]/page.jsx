@@ -36,11 +36,13 @@ export default function BlogPostPage() {
       setError(null)
       try {
         const response = await axios.get(`/api/blog/posts/${params.id}`)
+        console.log(response.data);
+        
         setPost(response.data)
         
         // Fetch related posts from the same category
         const relatedResponse = await axios.get('/api/blog/posts')
-        const related = relatedResponse.data
+        const related = relatedResponse.data.posts
           .filter(p => p._id !== params.id && p.category === response.data.category)
           .slice(0, 3)
         setRelatedPosts(related)
@@ -152,7 +154,7 @@ export default function BlogPostPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <CalendarIcon className="w-5 h-5" />
-                  <span>{formatDate(post.publishedAt)}</span>
+                  <span>{formatDate(post.updatedAt)}</span>
                 </div>
                 {post.readTime && (
                   <div className="flex items-center gap-2">
@@ -293,7 +295,7 @@ export default function BlogPostPage() {
                                 <span className="font-medium">{relatedPost.author}</span>
                                 <span className="mx-2 text-gray-300 dark:text-gray-600">|</span>
                                 <CalendarIcon className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
-                                <span>{formatDate(relatedPost.publishedAt)}</span>
+                                <span>{formatDate(relatedPost.updatedAt)}</span>
                               </div>
                             </div>
                           </div>

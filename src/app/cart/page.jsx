@@ -48,9 +48,9 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-900 flex pt-20 flex-col">
+      <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col">
         <Header />
-        <main className="flex-1 flex items-center justify-center mb-20">
+        <main className="flex-1 flex items-center justify-center mb-20 p-10">
           <div className="w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mt-20 text-center">
             <div className="text-7xl mb-6">🛒</div>
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-3">

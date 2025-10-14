@@ -33,6 +33,8 @@ export default function RootLayout({ children }) {
         <link rel="canonical" href="https://ventura-store.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#6DA975" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/img/part1.png" />
+        <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className={inter.className}>
         <Providers>

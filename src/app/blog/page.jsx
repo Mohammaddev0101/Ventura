@@ -19,7 +19,6 @@ import {
   DropdownMenuItem
 } from '@/components/ui/dropdown-menu'
 
-
 export default function BlogPage() {
   const { showError, AlertDialogComponent } = useAlertDialog()
   const [posts, setPosts] = useState([])
@@ -39,15 +38,11 @@ export default function BlogPage() {
       setLoading(true)
       setError(null)
       try {
-        const [postsRes, catsRes] = await Promise.all([
-          axios.get('/api/blog/posts'),
-          axios.get('/api/blog/categories')
-        ])
-        setPosts(postsRes.data)
-        setCategories(catsRes.data)
-        setTotal(postsRes.data.length)
-
-        console.log(postsRes.data);
+        const postsRes = await axios.get('/api/blog/posts');
+        console.log(postsRes.data.posts);
+        
+          setPosts(postsRes.data.posts || []);
+          setTotal(postsRes.data.total || 0);
 
       } catch (err) {
         setError('خطا در دریافت اطلاعات از سرور')
@@ -318,7 +313,14 @@ export default function BlogPage() {
                                 <span className="font-medium">{post.author}</span>
                                 <span className="mx-2 text-gray-300 dark:text-gray-600">|</span>
                                 <CalendarIcon className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
-                                <span>{formatDate(post.publishedAt)}</span>
+                                <span>{formatDate(post.updatedAt)}</span>
+                                <span className="mx-2 text-gray-300 dark:text-gray-600">|</span>
+                                {post.readTime && (
+                              <span className="flex items-center gap-1 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 px-2 py-0.5 rounded-full text-sm">
+                                <ArrowPathIcon className="w-4 h-4" />
+                                {post.readTime}
+                              </span>
+                            )}
                               </div>
 
                             </div>
@@ -333,12 +335,7 @@ export default function BlogPage() {
                                 # {tag}
                               </span>
                             ))}
-                            {post.readTime && (
-                              <span className="flex items-center gap-1 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 px-2 py-0.5 rounded-full text-sm">
-                                <ArrowPathIcon className="w-4 h-4" />
-                                {post.readTime}
-                              </span>
-                            )}
+                            
                           </div>
                         </CardContent>
                       </Card>
