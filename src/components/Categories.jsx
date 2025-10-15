@@ -47,7 +47,7 @@ export default function Categories() {
 
   return (
     <section
-      className="py-20 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900"
+      className="pt-20 pb-10 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-900"
       ref={ref}
     >
       <div className="container mx-auto px-4 max-w-7xl">
@@ -96,7 +96,7 @@ export default function Categories() {
                         alt={category.name}
                         width={84}
                         height={84}
-                        className="mx-auto rounded-xl bg-emerald-100 dark:bg-gray-900 dark:border dark:border-emerald-900/30 p-2"
+                        className="mx-auto rounded-xl bg-emerald-100 dark:bg-gray-900 border dark:border-0 p-2"
                       />
                     </div>
                     <h3 className="text-lg text-gray-900 dark:text-white mb-1 moraba">
@@ -118,15 +118,25 @@ export default function Categories() {
         >
           <Link
             href="/categories"
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-10 py-5 rounded-full font-bold shadow-xl hover:shadow-emerald-300/40 dark:hover:shadow-emerald-900/40 transition-all duration-300 backdrop-blur-lg border border-white/30 dark:border-gray-800/40"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white px-6 py-3 rounded-xl font-bold shadow-xl hover:shadow-emerald-300/40 dark:hover:shadow-emerald-900/40 transition-all duration-300 backdrop-blur-lg border border-white/30 dark:border-gray-800/40"
             style={{
               boxShadow:
                 '0 4px 24px 0 rgba(16,185,129,0.15), 0 1.5px 4px 0 rgba(16,185,129,0.10)'
             }}
           >
-            <span className="text-md">مشاهده همه دسته‌بندی‌ها</span>
-            <svg className="w-6 h-6 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <span className="text-sm text-white dark:text-gray-900">مشاهده همه دسته‌بندی‌ها</span>
+            <svg
+              className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform text-white dark:text-gray-900"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
           </Link>
         </motion.div>

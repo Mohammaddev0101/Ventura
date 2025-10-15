@@ -87,7 +87,7 @@ export default function Hero() {
           />
 
           {/* IMG */}
-          <div className="w-full lg:hidden justify-center items-center mt-10 flex mb-28">
+          <div className="w-full lg:hidden justify-center items-center mt-16 flex mb-28">
             <div className="relative w-full max-w-2xl flex justify-center items-center group">
               <Image
                 src={
@@ -130,7 +130,7 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="space-y-6"
             >
-              <h1 className="text-3xl lg:text-6xl  moraba font-bold">
+              <h1 className="text-4xl lg:text-6xl  moraba font-bold">
                 <span className="bg-gradient-to-r from-gray-900 to-slate-900 dark:from-white dark:to-slate-100 bg-clip-text text-transparent">سفری </span>
                 <span className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 bg-clip-text text-transparent mx-2">رویایی </span>
                 <span className="bg-gradient-to-r from-gray-900 to-slate-900 dark:from-white dark:to-slate-100 bg-clip-text text-transparent">تجربه کن</span>
@@ -202,7 +202,7 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="flex gap-4"
             >
-              <Button asChild size="lg" className="group bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-xl hover:shadow-2xl transition-all duration-300 px-5 py-3 rounded-2xl font-semibold">
+              <Button asChild size="lg" className="group bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white dark:text-gray-900 shadow-xl hover:shadow-2xl transition-all duration-300 px-5 py-3 rounded-2xl font-semibold">
                 <Link href="/products" className="flex items-center gap-3">
                   <span className='text-xs lg:text-md'>مشاهده محصولات ونتورا</span>
                   <ArrowLeftIcon className="w-5 h-5 group-hover:-translate-x-2 transition-transform duration-300" />
@@ -211,7 +211,7 @@ export default function Hero() {
 
               <Button variant="outline" size="lg" className="group border-2 border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-white transition-all duration-300 px-5 py-3 rounded-2xl font-semibold">
                 <PlayIcon className="w-5 h-5 group-hover:scale-110 transition-transform duration-300 ml-2" />
-                <span className='text-xs lg:text-md'>تماشای ویدیو معرفی</span>
+                <span className='text-xs lg:text-md'> ویدیو معرفی</span>
               </Button>
             </motion.div>
 
@@ -299,6 +299,25 @@ export default function Hero() {
         animate={inView ? { opacity: 1 } : {}}
         transition={{ duration: 0.6, delay: 1 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        onClick={() => {
+          const heroSection = document.querySelector('section');
+          let nextSection = null;
+          if (heroSection) {
+            let current = heroSection.nextElementSibling;
+            while (current) {
+              if (current.tagName.toLowerCase() === 'section') {
+                nextSection = current;
+                break;
+              }
+              current = current.nextElementSibling;
+            }
+          }
+          if (nextSection) {
+            nextSection.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+          }
+        }}
       >
         <motion.div
           animate={{ y: [0, 15, 0] }}

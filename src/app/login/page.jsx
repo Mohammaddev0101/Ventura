@@ -10,10 +10,8 @@ import { Separator } from '@/components/ui/separator'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 import { FaGoogle, FaGithub } from 'react-icons/fa'
 import { signIn } from 'next-auth/react'
-import { useAlertDialog } from '@/components/ui/AlertDialog'
 
 export default function LoginPage() {
-  const { showError, AlertDialogComponent } = useAlertDialog()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -36,7 +34,6 @@ export default function LoginPage() {
       router.push('/')
     } else {
       setError(result.message)
-      showError('خطا', result.message || 'ورود ناموفق بود')
     }
     
     setIsLoading(false)
@@ -55,7 +52,6 @@ export default function LoginPage() {
     } catch (error) {
       console.error('Social login error:', error)
       setError('خطا در ورود با ' + (provider === 'google' ? 'گوگل' : 'گیت‌هاب'))
-      showError('خطا', 'ورود اجتماعی ناموفق بود')
     }
   }
 
@@ -242,7 +238,6 @@ export default function LoginPage() {
           {' '}را می‌پذیرید.
         </div>
       </div>
-      <AlertDialogComponent />
     </div>
   )
 }

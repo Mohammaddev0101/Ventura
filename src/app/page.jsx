@@ -9,6 +9,8 @@ import Newsletter from '@/components/Newsletter'
 import Footer from '@/components/Footer'
 import BlogSection from '@/components/BlogSection'
 
+  import Loading from '@/app/loading'
+
 
 export const metadata = {
   title: 'ونتورا - فروشگاه تجهیزات کمپینگ و طبیعت‌گردی',
@@ -23,6 +25,7 @@ export const metadata = {
 }
 
 export default function Home() {
+
 
 
   return (

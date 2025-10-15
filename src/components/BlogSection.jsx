@@ -24,9 +24,9 @@ const BlogSection = () => {
         <div className="text-center mb-12">
           <div className="inline-flex items-center bg-emerald-100/50 dark:bg-emerald-900/30 px-5 py-2 rounded-full mb-6 border border-emerald-200/50 dark:border-emerald-800/50">
             <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5" />
-</svg>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5" />
+              </svg>
 
               تازه‌های وبلاگ
             </span>
@@ -131,6 +131,5 @@ const BlogSection = () => {
     </section>
   );
 };
-
 
 export default BlogSection;

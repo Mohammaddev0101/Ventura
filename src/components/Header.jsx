@@ -399,7 +399,7 @@ export default function Header() {
 
         {/* Mobile Glass Dock Menu */}
         <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 w-[350px] mx-auto">
-          <div className="backdrop-blur-md bg-white/70 dark:bg-gray-900/70 border-t border-gray-200 dark:border-gray-700 rounded-t-2xl shadow-2xl flex justify-around items-center py-2 px-2 relative">
+          <div className="backdrop-blur-md bg-white/60 dark:bg-gray-800/50 border-t border-emerald-200/40 dark:border-emerald-800/40 shadow-[0_8px_36px_0_rgba(16,24,40,0.10)] glass-gradient-dock rounded-t-[32px] flex justify-around items-center py-3 px-2 relative">
             <Link href="/" className="flex flex-col items-center text-xs text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mb-2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
@@ -414,7 +414,7 @@ export default function Header() {
               aria-label="تغییر حالت تیره/روشن"
             >
               {/* Sun/Moon Icon */}
-              {theme != 'dark' ? (
+              {theme == 'dark' ? (
                 // Sun icon for light mode
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mb-2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
@@ -427,7 +427,7 @@ export default function Header() {
                 </svg>
 
               )}
-              {theme != 'dark' ? "روشن" : "تیره"}
+              {theme == 'dark' ? "روشن" : "تیره"}
             </button>
             <button
               onClick={() => setIsSearchOpen(true)}

@@ -188,7 +188,7 @@ export default function AdminPage() {
           const res = await axios.get('/api/contact', {
             headers: { Authorization: `Bearer ${token}` }
           })
-          
+
           setContactMessages(res.data.messages)
         } catch {
           setContactMessages([])
@@ -206,7 +206,7 @@ export default function AdminPage() {
           const res = await axios.get('/api/newsletter', {
             headers: { Authorization: `Bearer ${token}` }
           })
-          
+
           setNewsletterSubscribers(res.data.subscribers)
         } catch {
           setNewsletterSubscribers([])
@@ -224,7 +224,7 @@ export default function AdminPage() {
           const res = await axios.get('/api/blog/posts', {
             headers: { Authorization: `Bearer ${token}` }
           })
-          
+
           setBlogPosts(res.data.posts)
         } catch {
           setBlogPosts([])
@@ -1331,7 +1331,7 @@ export default function AdminPage() {
               <span className="w-5 h-5">
                 {/* Plus icon */}
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke="currentColor" strokeWidth="2" d="M12 6v12M6 12h12"/>
+                  <path stroke="currentColor" strokeWidth="2" d="M12 6v12M6 12h12" />
                 </svg>
               </span>
               <span className={`${sidebarOpen ? "inline" : "hidden"}`}>اضافه کردن داده جدید</span>
@@ -1340,9 +1340,9 @@ export default function AdminPage() {
             <button
               onClick={() => setRefresh(r => !r)}
               className={`
-                flex items-center justify-start gap-2 w-full px-3 py-2 rounded-lg
+                 items-center justify-start gap-2 w-full px-3 py-2 rounded-lg
                  hover:bg-green-900/30 dark:hover:bg-green-900/50 dark:text-white transition
-                active:scale-95
+                active:scale-95 hidden md:flex
                 ${sidebarOpen ? "" : "justify-center"}
               `}
               type="button"
@@ -1394,7 +1394,7 @@ export default function AdminPage() {
           <div className="flex gap-2">
             <Button variant="outline" onClick={() => setRefresh(r => !r)} className="flex items-center gap-2 p-3 border-green-600 text-green-700 dark:border-green-400 dark:text-green-200 rounded-full">
               <ArrowPathIcon className="w-5 h-5" />
-              <span className=' hidden md:inline'>بروزرسانی</span>
+              <span className='hidden md:inline'>بروزرسانی</span>
             </Button>
             <Button variant="outline" onClick={() => setCloseSidebar(r => !r)} className="flex lg:hidden items-center gap-2 p-3 border-green-600 text-green-700 dark:border-green-400 dark:text-green-200 rounded-full">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
