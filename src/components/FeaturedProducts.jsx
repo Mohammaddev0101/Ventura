@@ -83,24 +83,24 @@ export default function FeaturedProducts() {
 
         {/* Products Slider  */}
         {loading ? (
-          <div className="relative md:my-24">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
-              {[...Array(4)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className="rounded-3xl p-6 animate-pulse shadow-lg bg-white/30 dark:bg-gray-900/40 backdrop-blur-lg border border-white/30 dark:border-gray-700/40 inverted-radius"
-                >
-                  <div className="w-full h-48 bg-gradient-to-br from-emerald-200 to-cyan-200 dark:from-gray-700 dark:to-gray-800 rounded-xl mb-4"></div>
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3 mb-4"></div>
-                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+           <div className="relative md:my-24">
+           <div className="flex overflow-x-auto gap-6 scrollbar-hide py-2 pb-1">
+             {[...Array(4)].map((_, i) => (
+               <motion.div
+                 key={i}
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ duration: 0.5, delay: i * 0.08 }}
+                 className="min-w-[250px] max-w-xs rounded-3xl p-6 animate-pulse shadow-lg bg-white/30 dark:bg-gray-800/40 backdrop-blur-lg border border-white/30 dark:border-gray-700/40 inverted-radius flex-shrink-0"
+               >
+                 <div className="w-full h-48 bg-gradient-to-br from-emerald-200 to-cyan-200 dark:from-gray-700 dark:to-gray-800 rounded-xl mb-4"></div>
+                 <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+                 <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3 mb-4"></div>
+                 <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+               </motion.div>
+             ))}
+           </div>
+         </div>
         ) : (
           <motion.div
             initial={{ opacity: 0, y: 50 }}
