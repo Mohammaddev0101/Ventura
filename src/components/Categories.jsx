@@ -65,8 +65,8 @@ export default function Categories() {
             </svg> دسته‌بندی‌های ونتورا
             </span>
           </div>
-          <h2 className="text-2xl lg:text-5xl font-extrabold bg-gradient-to-r from-gray-900 via-emerald-600 to-teal-400 dark:from-white dark:via-emerald-400 dark:to-teal-300 bg-clip-text text-transparent mb-5 drop-shadow-lg moraba">
-            تجهیزات ماجراجویی خود را انتخاب کنید
+          <h2 className="text-2xl lg:text-5xl font-extrabold bg-gradient-to-r from-gray-900 via-emerald-600 to-teal-400 dark:from-white dark:via-emerald-400 dark:to-teal-300 bg-clip-text text-transparent mb-2 md:mb-5 drop-shadow-lg moraba">
+            تجهیزات ماجراجویی خود را انتخاب کنید !
           </h2>
           <p className="text-sm text-gray-700 dark:text-gray-200 max-w-2xl mx-auto leading-relaxed backdrop-blur-sm bg-white/30 dark:bg-gray-900/20 rounded-xl px-6 py-3">
             دسته‌بندی‌های متنوع ونتورا را کاوش کنید و تجهیزات ایده‌آل برای طبیعت‌گردی و ماجراجویی خود را بیابید.

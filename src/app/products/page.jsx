@@ -272,8 +272,9 @@ export default function ProductsPage() {
               </div>
               {/* View Controls */}
               <div className="items-center gap-4 hidden md:flex">
-                <span className="text-base text-gray-700 dark:text-gray-300 font-semibold">
-                  {filteredProducts.length} محصول
+                <span className="text-base text-gray-700 dark:text-gray-300 flex gap-x-1">
+                  {filteredProducts.length} 
+                  <span>محصول</span>
                 </span>
                 <div className="flex border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden bg-white dark:bg-gray-800 shadow">
                   <Button
@@ -354,7 +355,7 @@ export default function ProductsPage() {
                   className={`grid gap-8 ${
                     viewMode === 'grid'
                       ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'
-                      : 'grid-cols-1'
+                      : 'grid-cols-1 md:grid-cols-2'
                   }`}
                 >
                   {paginatedProducts.map((product, index) => (
@@ -379,7 +380,7 @@ export default function ProductsPage() {
         </section>
 
         {/* Featured Brands */}
-        <section className="py-16 bg-gray-900">
+        <section className="py-16 bg-white dark:bg-gray-900">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -395,10 +396,10 @@ export default function ProductsPage() {
               </p>
             </motion.div>
             <div
-              className="w-full overflow-x-auto scrollbar-hide py-2"
+              className="w-full overflow-x-auto scrollbar-hide py-2 pb-10"
               style={{ WebkitOverflowScrolling: 'touch', direction: 'rtl' }}
             >
-              <div className="flex flex-nowrap gap-4 min-w-max justify-center md:justify-start px-1">
+              <div className="flex flex-nowrap gap-4 min-w-max justify-center px-1">
                 {brands.slice(1).map((brand, index) => (
                   <motion.div
                     key={brand}
@@ -406,7 +407,7 @@ export default function ProductsPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.08 }}
                     whileHover={{ scale: 1.07 }}
-                    className="bg-white/90 dark:bg-gray-800/90 rounded-2xl p-6 text-center shadow-lg hover:shadow-2xl transition-all cursor-pointer border border-transparent hover:border-emerald-400 w-[140px]"
+                    className="bg-white/90 dark:bg-gray-800/90 rounded-2xl p-6 text-center shadow-lg transition-all cursor-pointer border border-transparent hover:border-emerald-400 w-[140px]"
                     onClick={() => setFilters(prev => ({ ...prev, brand }))}
                   >
                     <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-lg flex items-center justify-center mx-auto mb-3 shadow">

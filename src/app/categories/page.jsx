@@ -103,7 +103,10 @@ export default function CategoriesPage() {
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center text-white dark:text-white">
               <div className="inline-flex items-center gap-2 bg-white/30 dark:bg-gray-800/60 backdrop-blur px-6 py-2 rounded-full mb-8 shadow-lg transition-colors duration-300">
-                <span className="text-2xl">🗂️</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
+                </svg>
+
                 <span className="text-md">دسته‌بندی محصولات</span>
               </div>
               <h1 className="text-5xl md:text-7xl font-extrabold mb-6 moraba drop-shadow-lg dark:drop-shadow-[0_2px_24px_rgba(16,185,129,0.25)]">
@@ -187,7 +190,7 @@ export default function CategoriesPage() {
                       `}></div>
                       {/* Floating badge */}
                       {selectedCategory === category.name && (
-                        <div className="absolute top-3 left-3 bg-primary text-white text-xs px-3 py-1 rounded-full shadow-lg animate-bounce">
+                        <div className="absolute top-3 left-3 bg-primary text-white text-xs px-3 py-1 rounded-full shadow-lg animate-bounce-once">
                           انتخاب شد!
                         </div>
                       )}
@@ -349,11 +352,10 @@ export default function CategoriesPage() {
                     ))}
                   </div>
                 ) : filteredProducts.length > 0 ? (
-                  <div className={`grid gap-6 ${
-                    viewMode === 'grid'
-                      ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-                      : 'grid-cols-1'
-                  }`}>
+                  <div className={`grid gap-6 ${viewMode === 'grid'
+                      ? 'grid-cols-2 lg:grid-cols-3'
+                      : 'grid-cols-1 md:grid-cols-2'
+                    }`}>
                     {filteredProducts.map((product) => (
                       <ProductCard key={product.id} product={product} viewMode={viewMode} />
                     ))}

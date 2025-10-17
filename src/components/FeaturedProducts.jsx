@@ -131,10 +131,11 @@ export default function FeaturedProducts() {
                 modules={[Navigation, Autoplay, Pagination]}
                 spaceBetween={24}
                 slidesPerView={2}
+                slidesPerGroup={2}
                 breakpoints={{
-                  640: { slidesPerView: 2 },
-                  780: { slidesPerView: 3 },
-                  1024: { slidesPerView: 4 }
+                  640: { slidesPerView: 2, slidesPerGroup: 2 },
+                  780: { slidesPerView: 3, slidesPerGroup: 3 },
+                  1024: { slidesPerView: 4, slidesPerGroup: 4 }
                 }}
                 navigation={{
                   nextEl: '.swiper-button-next-custom',

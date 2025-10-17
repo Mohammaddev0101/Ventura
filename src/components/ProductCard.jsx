@@ -44,88 +44,118 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
   if (viewMode === 'list') {
     return (
       <motion.div
-        whileHover={{ scale: 1.02 }}
+        whileHover={{ scale: 1.025 }}
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
-        className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+        className="group bg-white/90 dark:bg-gray-900/80 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl border border-emerald-100 dark:border-emerald-900/50 transition-all duration-400 backdrop-blur-lg"
       >
-        <div className="flex">
+        <div className="flex relative">
           {/* Image */}
-          <div className="w-48 h-48 bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 flex items-center justify-center relative overflow-hidden">
-            <div className="text-6xl opacity-70">🏕️</div>
+          <div className="w-44 md:w-52 h-48 md:h-52 bg-gradient-to-tl from-emerald-200 via-teal-200 to-white dark:from-emerald-800/50 dark:via-teal-900/40 dark:to-gray-800 flex items-center justify-center relative overflow-hidden">
+            <div className="text-[4rem] drop-shadow shadow-emerald-100 blur-[0.5px] opacity-80 scale-110 transition duration-250 group-hover:scale-125">
+              🏕️
+            </div>
+            {/* Product Image Overlay Option */}
+            {product?.image || product?.images?.[0]?.url ? (
+              <Image
+                src={product.image || product.images[0].url}
+                alt={product.name || 'محصول'}
+                fill
+                className="object-cover transition-all duration-400 group-hover:scale-110 group-hover:blur-[1px] mix-blend-multiply"
+                style={{ zIndex: 1, opacity: 0.9 }}
+                priority={false}
+              />
+            ) : null}
             {product.discount && (
-              <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
-                {product.discount}٪ تخفیف
+              <div className="absolute top-4 left-4 bg-gradient-to-l from-red-400 to-pink-500 text-white px-2.5 py-1.5 rounded-full text-xs font-extrabold tracking-wider shadow-xl animate-pulse z-20">
+                <span className="drop-shadow">{product.discount}٪ تخفیف</span>
               </div>
             )}
+            <div className="absolute bottom-4 left-4 bg-gradient-to-l from-emerald-600 via-emerald-500 to-teal-400 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg z-10">
+              {getCategoryLabel(product.category)}
+            </div>
           </div>
 
           {/* Content */}
-          <div className="flex-1 p-6 flex flex-col justify-between">
+          <div className="flex-1 px-8 py-7 flex flex-col justify-between gap-2 relative">
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">
-                  {getCategoryLabel(product.category)}
-                </span>
+              <div className="flex items-center justify-between mb-1 absolute left-3 top-3">
                 <button
                   onClick={toggleWishlist}
-                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
+                  className={`p-1 md:p-2 rounded-full border-2 transition-all duration-200 shadow hover:scale-110 focus:outline-none ${
+                    isWishlisted
+                      ? 'bg-red-50 border-red-200 dark:bg-red-900/30'
+                      : 'bg-gray-100 border-gray-200 dark:bg-gray-800 dark:border-gray-700'
+                  }`}
+                  aria-label="افزودن به علاقمندی"
                 >
                   {isWishlisted ? (
-                    <HeartSolidIcon className="w-5 h-5 text-red-500" />
+                    <HeartSolidIcon className="w-6 h-6 text-red-500 drop-shadow" />
                   ) : (
-                    <HeartIcon className="w-5 h-5 text-gray-400" />
+                    <HeartIcon className="w-6 h-6 text-gray-400 group-hover:text-emerald-400 transition-colors" />
                   )}
                 </button>
               </div>
 
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 hover:text-emerald-600 transition-colors">
+              <h3 className="text-[1.23rem] text-gray-900 dark:text-white mb-1 hover:text-emerald-600 transition-colors leading-7 line-clamp-2">
                 <Link href={`/products/${product.slug || product._id}`}>
                   {product.name}
                 </Link>
               </h3>
 
               {/* Rating */}
-              <div className="flex items-center space-x-2 space-x-reverse mb-4">
-                <div className="flex items-center">
+              <div className="flex items-center gap-2">
+                <div className="flex">
                   {[...Array(5)].map((_, i) => (
                     <StarIcon
                       key={i}
-                      className={`w-4 h-4 ${i < Math.floor(product.rating?.average || 0)
-                        ? 'fill-yellow-400 text-yellow-400'
-                        : 'text-gray-300'
-                        }`}
+                      className={`w-4 h-4 transition-all duration-150 ${
+                        i < Math.floor(product.rating?.average || 0)
+                          ? 'fill-yellow-400 text-yellow-400 scale-110'
+                          : 'text-gray-300 group-hover:text-yellow-300'
+                      }`}
                     />
                   ))}
                 </div>
-                <span className="text-sm text-gray-500">
-                  ({product.rating?.count || 0})
+                <span className="text-sm text-gray-400/90 font-light hidden md:block">
+                  {product.rating?.average ? product.rating.average.toFixed(1) : "۰"} <span className="font-normal">/ ۵ </span>
+                  <span className="mx-1 text-gray-400 dark:text-gray-500">|</span>
+                  ({product.rating?.count || 0} نظر)
                 </span>
               </div>
+
+              <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm line-clamp-2 max-h-[3.2em] overflow-hidden leading-6 hidden md:block tracking-tight">
+                  {product.description?.length > 0 ? product.description : '—'}
+              </p>
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3 space-x-reverse">
-                <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
-                  {formatPrice(product.price)} تومان
+              <div className="flex gap-1 items-start md:items-end">
+                
+                <span className="text-md md:text-lg text-emerald-600 dark:text-emerald-400">
+                  {formatPrice(product.price)} <sub className="text-sm">تومان</sub>
                 </span>
-                {product.originalPrice && (
-                  <span className="text-lg text-gray-500 line-through">
-                    {formatPrice(product.originalPrice)}
-                  </span>
-                )}
               </div>
 
-              <div className="flex items-center space-x-2 space-x-reverse">
-                <Button variant="outline" size="sm" asChild>
-                  <Link href={`/products/${product.slug || product._id}`}>
-                    <EyeIcon className="w-4 h-4 ml-1" />
-                    مشاهده
+              <div className="flex items-center gap-2 flex-col md:flex-row">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  asChild
+                  className="rounded-xl hidden md:flex  border-emerald-300 dark:border-emerald-800 px-3 py-2 hover:bg-emerald-50 dark:hover:bg-emerald-900/40 transition items-center gap-1"
+                >
+                  <Link href={`/products/${product.slug || product._id}`} className='gap-x-1 flex'>
+                    <EyeIcon className="w-5 h-5 mr-1 text-emerald-500 dark:text-emerald-400" />
+                    <span>مشاهده</span>
                   </Link>
                 </Button>
-                <Button size="sm" onClick={handleAddToCart}>
-                  <ShoppingCartIcon className="w-4 h-4 ml-1" />
-                  افزودن
+                <Button
+                  size="sm"
+                  onClick={handleAddToCart}
+                  className="rounded-full bg-emerald-500 hover:bg-emerald-600 text-white md:px-4 md:py-2 p-2 flex items-center gap-1 font-bold shadow-lg transition-all mt-2 md:mt-0"
+                >
+                  <ShoppingCartIcon className="w-5 h-5 md:mr-1" />
+                  <span className='hidden md:block'>افزودن</span>
                 </Button>
               </div>
             </div>

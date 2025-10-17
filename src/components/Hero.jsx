@@ -68,11 +68,11 @@ export default function Hero() {
       />
 
       {/* Subtle Mountain Silhouette */}
-      <div className="absolute inset-0 opacity-5 dark:opacity-10">
+      {/* <div className="absolute inset-0 opacity-5 dark:opacity-10">
         <svg className="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 100L25 70L50 90L75 60L100 100V0H0V100Z" fill="#10b981" fillOpacity="0.1" />
         </svg>
-      </div>
+      </div> */}
 
       <div className="container mx-auto px-4 py-6 lg:py-24 relative z-10 max-w-7xl">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -133,7 +133,7 @@ export default function Hero() {
               <h1 className="text-4xl lg:text-6xl  moraba font-bold">
                 <span className="bg-gradient-to-r from-gray-900 to-slate-900 dark:from-white dark:to-slate-100 bg-clip-text text-transparent">سفری </span>
                 <span className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 bg-clip-text text-transparent mx-2">رویایی </span>
-                <span className="bg-gradient-to-r from-gray-900 to-slate-900 dark:from-white dark:to-slate-100 bg-clip-text text-transparent">تجربه کن</span>
+                <span className="bg-gradient-to-r from-gray-900 to-slate-900 dark:from-white dark:to-slate-100 bg-clip-text text-transparent">تجربه کن !</span>
               </h1>
               <p className="text-sm sm:text-md text-gray-600 dark:text-gray-300 max-w-md leading-relaxed font-medium">
                 با تجهیزات حرفه‌ای کمپینگ ونتورا، هر ماجراجویی طبیعت‌گردی را به تجربه‌ای بی‌نظیر تبدیل کنید. کیفیت برتر، دوام بالا و طراحی هوشمندانه.
