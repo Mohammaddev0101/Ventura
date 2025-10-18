@@ -276,17 +276,6 @@ if (!user) {
   return null
 }
 
-if (error) {
-  return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <div className="flex flex-1 items-center justify-center min-h-[60vh]">
-        <div className="text-red-500">{error}</div>
-      </div>
-      <Footer />
-    </div>
-  )
-}
 
 // Use profile from backend if available, otherwise fallback to user context
 const profileData = profile || user
@@ -381,7 +370,7 @@ return (
             <button
               key={item.key}
               className={`flex items-center gap-3 px-4 py-2 rounded-lg text-right transition-colors ${activeTab === item.key
-                ? 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 font-bold'
+                ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300'
                 : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100'
                 }`}
               onClick={() => setActiveTab(item.key)}
@@ -401,18 +390,16 @@ return (
             </svg>
             <span> صفحه اصلی</span>
           </button>
-        </div>
-
-        <div className="mt-auto pt-8">
-          <Button
-            variant="destructive"
-            className="w-full flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white"
+          <button
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-red-600 dark:text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             onClick={logout}
+            type="button"
           >
             <LogOut className="w-4 h-4" />
             خروج
-          </Button>
+          </button>
         </div>
+
       </aside>
 
       {/* Main Content */}
@@ -428,7 +415,7 @@ return (
             <button
               key={item.key}
               className={`flex-1 flex flex-col items-center gap-1 px-2 py-2 rounded-lg text-xs transition-colors ${activeTab === item.key
-                ? 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 font-bold'
+                ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300'
                 : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100'
                 }`}
               onClick={() => setActiveTab(item.key)}
@@ -443,67 +430,167 @@ return (
         {/* Dashboard Tab */}
         {activeTab === 'dashboard' && (
           <>
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            <div className="mb-8 flex items-center justify-start gap-x-3">
+              <div className="flex items-center justify-center">
+                <div className="bg-gray-700 rounded-full p-3 shadow-lg">
+                  <UserIcon className="w-6 h-6 text-white drop-shadow-xl" />
+                </div>
+              </div>
+              <div className='flex items-start flex-col'>
+              <h1 className="text-xl md:text-2xl moraba text-gray-900 dark:text-gray-50 drop-shadow-md mb-2">
                 خوش آمدید، {profileData.name}
               </h1>
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-500 dark:text-gray-400 text-xs">
                 داشبورد کاربری شما در ونتورا
               </p>
+              </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-12">
               {/* Card 1: Total Orders */}
-              <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm transition-colors">
-                <CardContent className="p-6 flex items-center gap-4">
-                  <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg transition-colors">
-                    <ShoppingCart className="w-6 h-6 text-green-600 dark:text-green-300" />
+              <Card className="bg-white dark:bg-gray-800 border-0 shadow-xl dark:shadow-green-900/10 transition-colors group hover:-translate-y-1 hover:shadow-2xl">
+                <CardContent className="p-7 flex items-center gap-4">
+                  <div className="p-3 bg-gradient-to-br from-green-100 to-green-300 dark:from-green-900 dark:to-green-800 rounded-2xl transition-colors">
+                    <ShoppingCart className="w-7 h-7 text-green-600 dark:text-green-300 group-hover:scale-110 transition-transform" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{orders.length}</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">کل سفارشات</p>
+                    <p className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{orders.length}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-1">کل سفارشات</p>
                   </div>
                 </CardContent>
               </Card>
               {/* Card 2: Delivered Orders */}
-              <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm transition-colors">
-                <CardContent className="p-6 flex items-center gap-4">
-                  <div className="p-2 bg-green-200 dark:bg-green-800 rounded-lg transition-colors">
-                    <CheckCircle className="w-6 h-6 text-green-700 dark:text-green-300" />
+              <Card className="bg-white dark:bg-gray-800 border-0 shadow-xl dark:shadow-green-900/10 transition-colors group hover:-translate-y-1 hover:shadow-2xl">
+                <CardContent className="p-7 flex items-center gap-4">
+                  <div className="p-3 bg-gradient-to-br from-green-200 to-green-400 dark:from-green-800 dark:to-emerald-900 rounded-2xl transition-colors">
+                    <CheckCircle className="w-7 h-7 text-green-700 dark:text-green-300 group-hover:scale-110 transition-transform" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    <p className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
                       {orders.filter(o => o.status === 'delivered').length}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">تحویل شده</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-1">تحویل شده</p>
                   </div>
                 </CardContent>
               </Card>
               {/* Card 3: Wishlist */}
-              <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm transition-colors">
-                <CardContent className="p-6 flex items-center gap-4">
-                  <div className="p-2 bg-red-100 dark:bg-red-900 rounded-lg transition-colors">
-                    <Heart className="w-6 h-6 text-red-600 dark:text-red-400" />
+              <Card className="bg-white dark:bg-gray-800 border-0 shadow-xl dark:shadow-rose-900/10 transition-colors group hover:-translate-y-1 hover:shadow-2xl">
+                <CardContent className="p-7 flex items-center gap-4">
+                  <div className="p-3 bg-gradient-to-br from-red-100 to-pink-200 dark:from-red-900 dark:to-pink-900 rounded-2xl transition-colors">
+                    <Heart className="w-7 h-7 text-red-600 dark:text-red-400 group-hover:scale-110 transition-transform" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{wishlist.length}</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">علاقه‌مندی‌ها</p>
+                    <p className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{wishlist.length}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-1">علاقه‌مندی‌ها</p>
                   </div>
                 </CardContent>
               </Card>
               {/* Card 4: Shipped Orders */}
-              <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm transition-colors">
-                <CardContent className="p-6 flex items-center gap-4">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg transition-colors">
-                    <Truck className="w-6 h-6 text-blue-600 dark:text-blue-300" />
+              <Card className="bg-white dark:bg-gray-800 border-0 shadow-xl dark:shadow-blue-900/10 transition-colors group hover:-translate-y-1 hover:shadow-2xl">
+                <CardContent className="p-7 flex items-center gap-4">
+                  <div className="p-3 bg-gradient-to-br from-blue-100 to-cyan-200 dark:from-blue-900 dark:to-cyan-900 rounded-2xl transition-colors">
+                    <Truck className="w-7 h-7 text-blue-600 dark:text-blue-300 group-hover:scale-110 transition-transform" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    <p className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
                       {orders.filter(o => o.status === 'shipped').length}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">در حال ارسال</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-1">در حال ارسال</p>
                   </div>
                 </CardContent>
               </Card>
+            </div>
+
+            {/* Charts Area */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-800 flex flex-col items-center">
+                <h3 className="text-lg text-gray-800 dark:text-gray-300 mb-4 flex items-center w-full gap-2 moraba">
+                  <ShoppingCart className="w-5 h-5 text-green-500 dark:text-green-300" />
+                  روند سفارشات این ماه
+                </h3>
+                {/* Chart: Orders Trend (replace with real chart lib) */}
+                <div className="w-full h-48 flex items-center justify-center">
+                  <svg viewBox="0 0 230 80" fill="none" className="w-full h-32" style={{maxWidth:'96%'}}>
+                    <defs>
+                      <linearGradient id="line-gradient" x1="0" y1="0" x2="0" y2="80" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#34d399" />
+                        <stop offset="1" stopColor="#22d3ee" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M0 70 Q30 20 60 60 T120 30 T180 50 T230 20"
+                          stroke="url(#line-gradient)" strokeWidth="4" fill="none" className="transition-all" />
+                    <circle cx="60" cy="60" r="4" fill="#34d399" />
+                    <circle cx="120" cy="30" r="4" fill="#34d399" />
+                    <circle cx="180" cy="50" r="4" fill="#34d399" />
+                  </svg>
+                </div>
+                <span className="text-sm text-gray-500 dark:text-gray-400 mt-2">تعداد سفارشات در هفته‌های اخیر</span>
+              </div>
+
+              <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-800 flex flex-col items-center">
+                <h3 className="text-lg text-gray-800 dark:text-gray-300 mb-4 flex items-center w-full gap-2 moraba">
+                  <Heart className="w-5 h-5 text-red-400 dark:text-red-500" />
+                  پراکندگی علاقه‌مندی‌ها
+                </h3>
+                {/* Chart: Wishlist Pie (replace with real chart lib) */}
+                <div className="w-full h-48 flex items-center justify-center">
+                  <svg viewBox="0 0 80 80" className="w-28 h-28">
+                    <circle cx="40" cy="40" r="34" fill="none" stroke="#d1d5db" strokeWidth="8"/>
+                    <circle cx="40" cy="40" r="34" fill="none" stroke="#f87171" strokeWidth="8"
+                      strokeDasharray={`${wishlist.length > 0 ? 215*(wishlist.length/(orders.length+1)) : 1} 215`} strokeDashoffset="0"
+                      className="transition-all" />
+                  </svg>
+                </div>
+                <span className="text-sm text-gray-500 dark:text-gray-400 mt-2">درصد علاقه‌مندی به نسبت سفارشات</span>
+              </div>
+            </div>
+
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-800">
+                <h3 className="text-lg  text-gray-800 dark:text-gray-300 mb-4 flex items-center gap-2 moraba">
+                  <Truck className="w-5 h-5 text-blue-500 dark:text-blue-300" />
+                  روند ارسال سفارش‌ها
+                </h3>
+                {/* Chart: Simple Bar Chart (replace with a real chart lib!) */}
+                <div className="flex items-end justify-between h-32 w-full gap-2 px-2">
+                  {[28,40,22,32,24,36].map((h,i)=>(
+                    <div key={i} className="flex flex-col items-center w-5">
+                      <div className="w-5 rounded-t-xl bg-gradient-to-t from-blue-400 via-blue-500 dark:from-blue-700 dark:via-blue-900" style={{height: `${h}%`}} />
+                    </div>
+                  ))}
+                </div>
+                <span className="text-sm text-gray-500 dark:text-gray-400 mt-3 block text-center">ارسال‌ها در شش ماه اخیر</span>
+              </div>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-800">
+                <h3 className="text-lg text-gray-800 dark:text-gray-300 mb-4 flex items-center gap-2 moraba">
+                  <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-300" />
+                  وضعیت سفارش‌ها
+                </h3>
+                {/* Chart: Status Doughnut */}
+                <div className="relative flex items-center justify-center w-28 h-28 mx-auto">
+                  <svg viewBox="0 0 80 80" className="w-28 h-28 rotate-180">
+                    <circle cx="40" cy="40" r="34" fill="none" stroke="#e5e7eb" strokeWidth="8"/>
+                    <circle
+                      cx="40" cy="40" r="34" fill="none"
+                      stroke="#34d399" strokeWidth="8"
+                      strokeDasharray={`${orders.length > 0 ? ((orders.filter(o => o.status === 'delivered').length / orders.length) * 215) : 1} 215`}
+                      strokeDashoffset="0"
+                      className="transition-all"
+                    />
+                    <circle
+                      cx="40" cy="40" r="34" fill="none"
+                      stroke="#60a5fa" strokeWidth="8"
+                      strokeDasharray={`${orders.length > 0 ? ((orders.filter(o => o.status === 'shipped').length / orders.length) * 215) : 1} 215`}
+                      strokeDashoffset={`${orders.length > 0 ? ((orders.filter(o => o.status === 'delivered').length / orders.length) * 215) : 1}`}
+                      className="transition-all"
+                    />
+                  </svg>
+                  <span className="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-800 dark:text-gray-100">
+                    {orders.length}
+                  </span>
+                </div>
+                <span className="text-sm text-gray-500 dark:text-gray-400 mt-3 block text-center">نسبت تحویل‌شده/درحال ارسال</span>
+              </div>
             </div>
           </>
         )}
@@ -520,7 +607,17 @@ return (
             <CardContent>
               <div className="space-y-4">
                 {orders.length === 0 ? (
-                  <div className="text-center text-gray-500 dark:text-gray-400 py-8">سفارشی یافت نشد.</div>
+                  <div className="flex flex-col items-center justify-center text-center text-gray-500 dark:text-gray-400 py-8">
+                    <img
+                      src="/img/empty-orders.webp"
+                      alt="هیچ سفارشی وجود ندارد"
+                      className="mx-auto mb-4 w-44 h-44 object-contain opacity-80"
+                      width={128}
+                      height={128}
+                      loading="lazy"
+                    />
+                    سفارشی یافت نشد.
+                  </div>
                 ) : (
                   orders.map((order) => (
                     <div
@@ -587,7 +684,16 @@ return (
             <CardContent>
               <div className="space-y-4">
                 {wishlist.length === 0 ? (
-                  <div className="text-center text-gray-500 dark:text-gray-400 py-8">آیتمی در علاقه‌مندی‌ها وجود ندارد.</div>
+                  <div className="flex flex-col items-center justify-center py-8 text-center text-gray-500 dark:text-gray-400">
+                    <img 
+                      src="/img/empty-wishlist.png" 
+                      alt="علاقه‌مندی خالی" 
+                      className="w-44 h-44 mx-auto mb-3 opacity-80"
+                      style={{objectFit: "contain"}}
+                    />
+                    آیتمی در علاقه‌مندی‌ها وجود ندارد.
+                  </div>
+                
                 ) : (
                   wishlist.map((item) => (
                     <div

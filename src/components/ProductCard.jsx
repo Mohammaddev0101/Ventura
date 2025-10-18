@@ -20,6 +20,8 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
   const [isHovered, setIsHovered] = useState(false)
   const { addToCart } = useCart()
 
+  const [imgError, setImgError] = useState(false);
+
   const toggleWishlist = () => {
     setIsWishlisted(!isWishlisted)
   }
@@ -52,9 +54,9 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
         <div className="flex relative">
           {/* Image */}
           <div className="w-44 md:w-52 h-48 md:h-52 bg-gradient-to-tl from-emerald-200 via-teal-200 to-white dark:from-emerald-800/50 dark:via-teal-900/40 dark:to-gray-800 flex items-center justify-center relative overflow-hidden">
-            <div className="text-[4rem] drop-shadow shadow-emerald-100 blur-[0.5px] opacity-80 scale-110 transition duration-250 group-hover:scale-125">
+            {/* <div className="text-[4rem] drop-shadow shadow-emerald-100 blur-[0.5px] opacity-80 scale-110 transition duration-250 group-hover:scale-125">
               🏕️
-            </div>
+            </div> */}
             {/* Product Image Overlay Option */}
             {product?.image || product?.images?.[0]?.url ? (
               <Image
@@ -172,22 +174,31 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
       onHoverEnd={() => setIsHovered(false)}
       className="group relative py-4 h-auto"
     >
-      <Card className="overflow-hidden relative bg-gray-100 dark:bg-gray-800 border-0 rounded-[28px] shadow-[0_20px_60px_rgba(16,24,40,0.08)] hover:shadow-[0_24px_80px_rgba(16,24,40,0.12)] transition-all duration-500 inverted-radius h-[300px] lg:h-[400px] !w-full ">
+      <Card className="overflow-hidden relative bg-gray-100 dark:bg-gray-800 border-0 rounded-[28px] shadow-[0_20px_60px_rgba(16,24,40,0.08)] hover:shadow-[0_24px_80px_rgba(16,24,40,0.12)] transition-all duration-500 inverted-radius h-auto !w-full ">
         <div className="relative">
           {/* Product Image */}
           <div className="relative w-full">
-            {product?.image || product?.images?.[0].url ? (
+            {imgError || !(product.image || product.images?.[0]?.url) ? (
               <Image
-                src={product.image || product.images[0].url}
-                alt={product.name || 'product'}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                priority={false}
-              />
+              src="/img/defultImg.jpg"
+              alt="product"
+              className="object-cover !w-full !h-36"
+              width={200}
+              height={100}
+              priority={false}
+            />
             ) : (
-              <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center text-6xl">🖼️</div>
+              <Image
+                src={product.image || product.images?.[0]?.url}
+                alt={product.name || 'product'}
+                className="object-cover"
+                width={200}
+              height={100}
+                priority={false}
+                onError={() => setImgError(true)}
+              />
             )}
+            
 
             {/* Rounded corners on image like mock */}
             <div className="pointer-events-none absolute inset-0 rounded-[28px] rounded-b-none ring-1 ring-black/5" />
@@ -196,30 +207,30 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
             <motion.span
               initial={{ y: -8, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              className="absolute top-4 left-4 z-10 inline-flex items-center rounded-full bg-emerald-500 px-3 py-1 text-xs font-bold text-white shadow"
+              className="absolute top-4 left-4 z-10 inline-flex items-center rounded-full bg-emerald-600 px-3 py-1 text-xs text-white shadow"
             >
-              {/* {product.category.name || 'سایزبندی'} */}
+              {product.category.name || 'سایزبندی'}
             </motion.span>
           </div>
         </div>
 
         <CardContent className="p-3 md:p-6">
           {/* Title */}
-          <h3 className="text-center text-md md:text-xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+          <h3 className="text-center text-md md:text-xl font-bold tracking-tight text-gray-900 dark:text-white">
             <Link href={`/products/${product.slug || product._id}`}>{product.name}</Link>
           </h3>
 
           {/* Description */}
-          <p className="mt-3 text-center text-sm leading-7 text-gray-500 line-clamp-2">
+          <p className="md:mt-3 mt-2 text-center text-xs leading-7 text-gray-500 line-clamp-2">
             {product.description || 'لورم ایپسوم متنی ساختگی است با تولید سادگی نامفهوم از صنعت چاپ.'}
           </p>
 
           {/* Bottom row: price and floating cart */}
-          <div className="relative mt-6 flex items-end justify-between">
+          <div className="relative mt-9 flex items-end justify-between">
 
 
             <div className="ml-16 flex items-baseline gap-2 text-gray-900 dark:text-white">
-              <span className="text-sm md:text-2xl font-extrabold text-gray-900 dark:text-white">
+              <span className="text-sm md:text-2xl font-semibold text-gray-900 dark:text-white">
                 {formatPrice(product.price)}
               </span>
               <sup className="text-sm text-gray-500">تومان</sup>
@@ -232,7 +243,7 @@ export default function ProductCard({ product, viewMode = 'grid' }) {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.96 }}
-          className="absolute left-0 top-[265px] lg:left-0 lg:top-[365px] flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-100 text-gray-700 shadow-[0_8px_24px_rgba(16,24,40,0.12)] ring-1 ring-black/5 dark:bg-gray-900 dark:text-white"
+          className="absolute left-1 top-[280px] md:left-1 md:top-[321px] flex h-12 md:h-14 w-12 md:w-14 items-center justify-center rounded-2xl bg-gray-100 text-gray-700 shadow-[0_8px_24px_rgba(16,24,40,0.12)] ring-1 ring-black/5 dark:bg-gray-900 dark:text-white"
           aria-label="add-to-cart"
           onClick={handleAddToCart}
         >
